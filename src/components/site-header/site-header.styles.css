@@ -1,0 +1,19 @@
+.site-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px 20px;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: calc(100% - 20px);
+  height: 10px;
+  background-color: var(--accent-color);
+  border-radius: 5px;
+  transform: translateX(-50%);
+}

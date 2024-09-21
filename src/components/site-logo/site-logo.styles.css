@@ -1,0 +1,35 @@
+.site-logo {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.site-logo::before,
+.site-logo::after {
+  content: "";
+  position: absolute;
+  background-color: var(--accent-color);
+}
+
+.site-logo::before {
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow:
+    0 14px 0 0 var(--accent-color),
+    0 28px 0 0 var(--accent-color);
+}
+
+.site-logo::after {
+  top: 2px;
+  right: 0;
+  width: 24px;
+  height: 8px;
+  border-radius: 4px;
+  box-shadow:
+    8px 14px 0 0 var(--accent-color),
+    0 28px 0 0 var(--accent-color);
+}

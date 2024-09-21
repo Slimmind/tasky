@@ -1,0 +1,4 @@
+.main-menu__colors {
+	display: flex;
+	justify-content: space-between;
+}
