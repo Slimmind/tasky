@@ -11,7 +11,7 @@ export const Add = () => {
 
 	return (
 		<>
-			<Button mod='add' onClick={toggleMenu} />
+			<Button mod='icon add' onClick={toggleMenu} />
 			<Panel isActive={isMenuVisible}>ADD</Panel>
 		</>
 	);

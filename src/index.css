@@ -14,12 +14,15 @@
   font-optical-sizing: auto;
 
   --blur: blur(2px);
+  --shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+	--radius-main: 1rem;
+	--radius-small: .25rem;
+
 	--color-violet: rgb(254, 178, 54);
 	--main-color-prop: 46, 139, 130;
   --main-color-opacity: 0.7;
-  --shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   --border-width: 4px;
-  --color-white: white;
+  --color-white: #fff;
 	--color-white-transparent: rgba(255, 255, 255, var(--main-color-opacity));
   --color-black: black;
   --semi-accent-color-opacity: 0.2;
@@ -65,4 +68,8 @@ h1 {
 
 ul {
 	list-style: none;
+}
+
+.form p {
+	margin-bottom: 20px;
 }

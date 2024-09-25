@@ -18,6 +18,7 @@
 .panel--filled {
 	background-color: var(--accent-color);
 	border-color: transparent;
+	color: var(--color-white);
 }
 
 .panel--opened {

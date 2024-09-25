@@ -20,7 +20,7 @@ import {
 type AuthContextType = {
 	currentUser: User | null;
 	login: (email: string, password: string) => Promise<UserCredential>;
-	signup: (email: string, password: string) => Promise<UserCredential>;
+	sign_up: (email: string, password: string) => Promise<UserCredential>;
 	loginWithGoogle: () => Promise<UserCredential>;
 	logout: () => Promise<void>;
 };
@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 		return unsubscribe;
 	}, []);
 
-	const signup = (email: string, password: string) => {
+	const sign_up = (email: string, password: string) => {
 		return createUserWithEmailAndPassword(auth, email, password);
 	};
 
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const value = {
 		currentUser,
 		login,
-		signup,
+		sign_up,
 		loginWithGoogle,
 		logout,
 	};
@@ -80,4 +80,3 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 		</AuthContext.Provider>
 	);
 };
-

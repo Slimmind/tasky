@@ -1,0 +1,65 @@
+.input__wrap {
+	position: relative;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: var(--color-white);
+	border: 0;
+	border-radius: var(--radius-small);
+  color: var(--accent-color);
+  font-size: 18px;
+	outline: none;
+	resize: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--accent-color-transparent);
+	font-size: 18px;
+}
+
+label {
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px;
+	background-color: var(--accent-color);
+	border-radius: var(--radius-small) var(--radius-small) 0 0;
+	color: var(--color-white);
+	font-size: 14px;
+}
+
+label + .input__wrap input,
+label + .input__wrap textarea {
+	border-radius: 0 var(--radius-small) var(--radius-small) var(--radius-small);
+}
+
+.input__wrap:has(button) input,
+.input__wrap:has(button) textarea {
+	padding-right: 40px;
+}
+
+.input__wrap .btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 30px;
+	height: 100%;
+	background-color: var(--accent-color);
+	border-radius: 0 var(--radius-small) var(--radius-small) 0;
+	box-shadow: none;
+}
+
+.input__wrap .btn--plus::before,
+.input__wrap .btn--minus::before,
+.input__wrap .btn--plus::after {
+	background-color: var(--color-bg);
+}
+
+.input__wrap .btn--wide {
+	margin-bottom: 0;
+}

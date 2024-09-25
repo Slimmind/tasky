@@ -11,7 +11,7 @@ export const Search = () => {
 	};
 	return (
 		<>
-			<Button mod='search' onClick={toggleMenu} />
+			<Button mod='icon search' onClick={toggleMenu} />
 			<Panel isActive={isMenuVisible}>SEARCH</Panel>
 		</>
 	);

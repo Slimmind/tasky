@@ -12,3 +12,8 @@ export type ColorOption = {
 	isActive: boolean;
 	color: string;
 };
+
+export const FormViews = {
+	LOGIN: 'login',
+	SIGN_UP: 'sign_up',
+};

@@ -1,14 +1,22 @@
 .btn {
   position: relative;
-  flex-shrink: 0;
-  width: 40px;
+	padding: 10px 20px;
+	background-color: var(--accent-color);
+  border: 0;
+	border-radius: var(--radius-main);
+	color: var(--color-white);
+	font-size: 1rem;
+  outline: none;
+}
+
+.btn--icon {
+	flex-shrink: 0;
+	width: 40px;
   height: 40px;
   padding: 0;
-  background-color: transparent;
-  border: 0;
-  border-radius: 50%;
-  outline: none;
-  overflow: hidden;
+	background-color: transparent;
+	border-radius: 50%;
+	overflow: hidden;
 }
 
 .btn::before,

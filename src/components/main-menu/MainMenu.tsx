@@ -44,7 +44,7 @@ export const MainMenu = () => {
 
 	return (
 		<>
-			<Button mod='menu' onClick={toggleMenu} />
+			<Button mod='icon menu' onClick={toggleMenu} />
 			<Panel isActive={isMenuVisible}>
 				<div className={classes}>
 					<section className='panel__section'>
@@ -52,7 +52,7 @@ export const MainMenu = () => {
 							{colorsMenu.map((colorOption, idx) => (
 								<li className='main-menu__colors-item' key={idx}>
 									<Button
-										mod='color'
+										mod='icon color'
 										activeClass={colorOption.isActive ? 'active' : ''}
 										onClick={() => changeColor(colorOption.color)}
 										style={{
