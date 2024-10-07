@@ -4,6 +4,7 @@
 	background-color: var(--accent-color);
   border: 0;
 	border-radius: var(--radius-main);
+	box-shadow: var(--shadow);
 	color: var(--color-white);
 	font-size: 1rem;
   outline: none;
@@ -16,6 +17,7 @@
   padding: 0;
 	background-color: transparent;
 	border-radius: 50%;
+	box-shadow: none;
 	overflow: hidden;
 }
 

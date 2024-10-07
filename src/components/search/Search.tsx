@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import Button from '../button';
-import Panel from '../panel';
-import './search.styles.css';
+import { lazy } from 'react';
 
-export const Search = () => {
-	const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+const Button = lazy(() => import('../button'));
+const Panel = lazy(() => import('../panel'));
 
-	const toggleMenu = (): void => {
-		setIsMenuVisible((prev) => !prev);
-	};
+type SearchProps = {
+	isActive: boolean;
+	togglePanel: () => void;
+};
+
+export const Search = ({ isActive, togglePanel }: SearchProps) => {
 	return (
 		<>
-			<Button mod='icon search' onClick={toggleMenu} />
-			<Panel isActive={isMenuVisible}>SEARCH</Panel>
+			<Button mod='icon search' onClick={togglePanel} />
+			<Panel isActive={isActive}>SEARCH</Panel>
 		</>
 	);
 };

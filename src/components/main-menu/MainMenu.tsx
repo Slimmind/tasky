@@ -1,70 +1,73 @@
-import { appColors, ColorOption } from '../../utils/constants';
-import clsx from 'clsx';
-import Button from '../button';
-import './main-menu.styles.css';
-import { useEffect, useState } from 'react';
-import Panel from '../panel';
+import { lazy } from "react";
+import { appColors, ColorOption } from "../../utils/constants";
+import clsx from "clsx";
+import { useEffect, useState } from "react";
+import "./main-menu.styles.css";
 
-export const MainMenu = () => {
-	const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
-	const [colorsMenu, setColorsMenu] = useState<ColorOption[]>([]);
+const Button = lazy(() => import("../button"));
+const Panel = lazy(() => import("../panel"));
 
-	const toggleMenu = (): void => {
-		setIsMenuVisible((prev) => !prev);
-	};
+type MainMenuProps = {
+  isActive: boolean;
+  togglePanel: () => void;
+};
 
-	const changeColor = (color: string) => {
-		document.documentElement.style.setProperty('--main-color-prop', color);
+export const MainMenu = ({ isActive, togglePanel }: MainMenuProps) => {
+  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+  const [colorsMenu, setColorsMenu] = useState<ColorOption[]>([]);
 
-		const newColorIndex = appColors.findIndex(
-			(appColor: string) => appColor === color
-		);
+  const changeColor = (color: string) => {
+    document.documentElement.style.setProperty("--main-color-prop", color);
 
-		const changedColors = colorsMenu.map(
-			(colorOption: ColorOption, idx: number): ColorOption => ({
-				...colorOption,
-				isActive: idx === newColorIndex,
-			})
-		);
+    const newColorIndex = appColors.findIndex(
+      (appColor: string) => appColor === color,
+    );
 
-		setColorsMenu(changedColors);
-		setIsMenuVisible(false);
-	};
+    const changedColors = colorsMenu.map(
+      (colorOption: ColorOption, idx: number): ColorOption => ({
+        ...colorOption,
+        isActive: idx === newColorIndex,
+      }),
+    );
 
-	const classes = clsx('main-menu', isMenuVisible && 'main-menu--open');
+    setColorsMenu(changedColors);
+    setIsMenuVisible(false);
+  };
 
-	useEffect(() => {
-		const colors = appColors.map((color: string, idx: number) => ({
-			isActive: idx === 0,
-			color,
-		}));
+  const classes = clsx("main-menu", isMenuVisible && "main-menu--open");
 
-		setColorsMenu(colors);
-	}, []);
+  useEffect(() => {
+    const colors = appColors.map((color: string, idx: number) => ({
+      isActive: idx === 0,
+      color,
+    }));
 
-	return (
-		<>
-			<Button mod='icon menu' onClick={toggleMenu} />
-			<Panel isActive={isMenuVisible}>
-				<div className={classes}>
-					<section className='panel__section'>
-						<ul className='main-menu__colors'>
-							{colorsMenu.map((colorOption, idx) => (
-								<li className='main-menu__colors-item' key={idx}>
-									<Button
-										mod='icon color'
-										activeClass={colorOption.isActive ? 'active' : ''}
-										onClick={() => changeColor(colorOption.color)}
-										style={{
-											backgroundColor: `rgb(${colorOption.color})`,
-										}}
-									/>
-								</li>
-							))}
-						</ul>
-					</section>
-				</div>
-			</Panel>
-		</>
-	);
+    setColorsMenu(colors);
+  }, []);
+
+  return (
+    <>
+      <Button mod="icon menu" onClick={togglePanel} />
+      <Panel isActive={isActive}>
+        <div className={classes}>
+          <section className="panel__section">
+            <ul className="main-menu__colors">
+              {colorsMenu.map((colorOption, idx) => (
+                <li className="main-menu__colors-item" key={idx}>
+                  <Button
+                    mod="icon color"
+                    activeClass={colorOption.isActive ? "active" : ""}
+                    onClick={() => changeColor(colorOption.color)}
+                    style={{
+                      backgroundColor: `rgb(${colorOption.color})`,
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </Panel>
+    </>
+  );
 };

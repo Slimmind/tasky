@@ -1,2 +1,11 @@
 .clock {
+  padding: 5px 10px;
+  background-color: var(--accent-color);
+  border-radius: 20px;
+  color: var(--color-white);
+}
+
+.panel--clock {
+	padding: 0;
+	border: 0;
 }

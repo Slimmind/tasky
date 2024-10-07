@@ -1,0 +1,33 @@
+.tabs__header {
+  background-color: var(--accent-color);
+  border-bottom: 2px solid var(--color-white-transparent);
+}
+
+.tabs__header-list {
+  display: flex;
+}
+
+.tabs__header-item {
+  width: calc(100% / 3);
+  padding: 10px;
+  border-right: 2px solid var(--color-white-transparent);
+  text-align: center;
+}
+
+.tabs__header-item:last-of-type {
+  border-right: 0;
+}
+
+.tabs__header-item--active {
+	border: 0;
+	color: var(--accent-color);
+	background-color: var(--color-white-transparent);
+}
+
+.tabs__content-item {
+	display: none;
+}
+
+.tabs__content-item--active {
+	display: block;
+}

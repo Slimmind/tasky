@@ -17,3 +17,10 @@ export const FormViews = {
 	LOGIN: 'login',
 	SIGN_UP: 'sign_up',
 };
+
+export type PanelTypes = 'menu' | 'search' | 'auth' | 'add' | null;
+
+export const Themes = {
+	DARK: 'dark',
+	LIGHT: 'light',
+};

@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import Button from '../button';
-import Panel from '../panel';
+import { lazy } from 'react';
 
-export const Add = () => {
-	const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+const Button = lazy(() => import('../button'));
+const Panel = lazy(() => import('../panel'));
 
-	const toggleMenu = (): void => {
-		setIsMenuVisible((prev) => !prev);
-	};
+type AddProps = {
+	isActive: boolean;
+	togglePanel: () => void;
+};
 
+export const Add = ({ isActive, togglePanel }: AddProps) => {
 	return (
 		<>
-			<Button mod='icon add' onClick={toggleMenu} />
-			<Panel isActive={isMenuVisible}>ADD</Panel>
+			<Button mod='icon add' onClick={togglePanel} />
+			<Panel isActive={isActive}>ADD</Panel>
 		</>
 	);
 };
