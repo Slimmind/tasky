@@ -4,7 +4,7 @@ import './button.styles.css';
 
 type CommonProps = {
 	mod?: string;
-	activeClass?: string;
+	actionClass?: string;
 };
 
 type ButtonProps = ComponentPropsWithoutRef<'button'> &
@@ -22,8 +22,10 @@ type Props = ButtonProps | AnchorProps;
 const isAnchorProps = (props: Props): props is AnchorProps => 'href' in props;
 
 export const Button = (props: Props) => {
-	const { mod, activeClass, ...restProps } = props;
-	const classes = `btn ${getMod('btn', mod)} ${activeClass ? activeClass : ''}`;
+	const { mod, actionClass, ...restProps } = props;
+	const classes = `btn ${mod && getMod('btn', mod)} ${
+		actionClass && getMod('btn', actionClass)
+	}`;
 
 	if (isAnchorProps(props)) {
 		const { href, ...anchorProps } = restProps as AnchorProps;

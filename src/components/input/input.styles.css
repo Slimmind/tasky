@@ -1,65 +1,212 @@
-.input__wrap {
+.input {
 	position: relative;
+}
+
+.input--radio {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 10px 0 0;
+}
+
+.input--radio label,
+.input--checkbox label {
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: 40px;
+	padding-left: 40px;
+	background-color: var(--accent-color);
+	border-radius: var(--radius-main);
+	cursor: pointer;
+}
+
+.input--checkbox label {
+	background-color: transparent;
+	color: var(--accent-color);
+}
+
+.input--radio label::before,
+.input--radio label::after,
+.input--checkbox label::before,
+.input--checkbox label::after {
+	content: '';
+	position: absolute;
+}
+
+.input--radio label::before,
+.input--checkbox label::before {
+	top: calc(50% - 16px);
+	left: 4px;
+	width: 32px;
+	height: 32px;
+	background-color: var(--color-white);
+}
+
+.input--radio label::before,
+.input--radio label::after {
+	border-radius: 50%;
+}
+
+.input--radio label::after {
+	top: 8px;
+	left: 8px;
+	width: 24px;
+	height: 24px;
+	background-color: var(--accent-color);
+	opacity: 0;
+	transform: scale(.8);
+	transition: opacity .3s, transform .3s ease-in-out;
+}
+
+.input--checkbox label::before {
+	border: var(--border-width) solid var(--accent-color);
+	border-radius: var(--radius-small);
+}
+
+.input--checkbox label::after {
+	top: calc(50% - 14px);
+	left: 14px;
+	width: 12px;
+	height: 20px;
+	border-right: var(--border-width) solid var(--accent-color);
+	border-bottom: var(--border-width) solid var(--accent-color);
+	opacity: 0;
+	transform: scale(.8) rotate(45deg);
+	transition: opacity .3s, transform .3s ease-in-out;
+}
+
+.input--radio input,
+.input--checkbox input {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.input--radio input:checked + label::after,
+.input--checkbox input:checked + label::after {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.input--checkbox input:checked + label::after {
+	transform: scale(1) rotate(45deg);
+}
+
+.input--invalid input,
+.input--invalid textarea,
+.input--with-description input,
+.input--with-description textarea {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.input--invalid label {
+  background-color: var(--color-red);
+}
+
+.input--invalid label + .input__wrap input,
+.input--invalid label + .input__wrap textarea {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.input--invalid.input--radio label,
+.input--invalid.input--checkbox label {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	color: var(--color-white);
+}
+
+.input--invalid .input__description {
+	background-color: var(--color-red);
+	border-radius: 0;
+}
+
+.input__wrap {
+  position: relative;
+	margin-bottom: 10px;
 }
 
 input,
 textarea {
   display: block;
   width: 100%;
-  margin-bottom: 20px;
   padding: 10px;
   background-color: var(--color-white);
-	border: 0;
-	border-radius: var(--radius-small);
+  border: var(--border-width) solid var(--accent-color);
+  border-radius: var(--radius-small);
   color: var(--accent-color);
   font-size: 18px;
-	outline: none;
-	resize: none;
+  outline: none;
+  resize: none;
 }
 
 input::placeholder,
 textarea::placeholder {
   color: var(--accent-color-transparent);
-	font-size: 18px;
+  font-size: 18px;
 }
 
 label {
-	display: inline-block;
-	vertical-align: top;
-	padding: 4px;
-	background-color: var(--accent-color);
-	border-radius: var(--radius-small) var(--radius-small) 0 0;
-	color: var(--color-white);
-	font-size: 14px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 4px 14px;
+  background-color: var(--accent-color);
+  border-radius: var(--radius-small) var(--radius-small) 0 0;
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: bold;
 }
 
 label + .input__wrap input,
 label + .input__wrap textarea {
-	border-radius: 0 var(--radius-small) var(--radius-small) var(--radius-small);
+  border-top-left-radius: 0;
 }
 
 .input__wrap:has(button) input,
 .input__wrap:has(button) textarea {
-	padding-right: 40px;
+  padding-right: 40px;
 }
 
 .input__wrap .btn {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 30px;
-	height: 100%;
-	background-color: var(--accent-color);
-	border-radius: 0 var(--radius-small) var(--radius-small) 0;
-	box-shadow: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: 0 var(--radius-small) var(--radius-small) 0;
+  box-shadow: none;
 }
 
 .input__wrap .btn--plus::before,
 .input__wrap .btn--minus::before,
 .input__wrap .btn--plus::after {
-	background-color: var(--color-bg);
+  background-color: var(--color-bg);
 }
 
 .input__wrap .btn--wide {
-	margin-bottom: 0;
+  margin-bottom: 0;
+}
+
+.input__error-message,
+.input__description {
+  padding: 0 14px 4px;
+  background-color: var(--color-red);
+  border-radius: 0 0 var(--radius-small) var(--radius-small);
+  color: var(--color-white);
+  font-size: 12px;
+}
+
+.input__error-message svg {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 5px;
+}
+
+.input__description {
+  background-color: var(--accent-color);
+	font-style: italic;
 }

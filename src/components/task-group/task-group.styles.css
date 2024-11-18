@@ -1,0 +1,34 @@
+.task-group {
+	flex-shrink: 0;
+	width: calc(100vw - 20px);
+	border: 1px dashed;
+	scroll-snap-align: start;
+}
+
+.task-group__header {
+	margin-bottom: 10px;
+	padding: 5px 10px;
+	border-radius: var(--radius-main);
+	-webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	color: var(--color-white);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.task-group--backlog .task-group__header {
+	background-color: var(--color-backlog);
+}
+
+.task-group--todo .task-group__header {
+	background-color: var(--color-todo);
+}
+
+.task-group--inProgress .task-group__header {
+	background-color: var(--color-inProgress);
+}
+
+.task-group--done .task-group__header {
+	background-color: var(--color-done);
+}

@@ -16,21 +16,24 @@
   --blur: blur(2px);
   --shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 	--radius-main: 1rem;
-	--radius-small: .25rem;
+	--radius-small: .5rem;
+	--border-width: 4px;
 
-	--color-violet: rgb(254, 178, 54);
-	--main-color-prop: 46, 139, 130;
-  --main-color-opacity: 0.7;
-  --border-width: 4px;
+
+	--main-color-prop: 0, 118, 110;
   --color-white: #fff;
-	--color-white-transparent: rgba(255, 255, 255, var(--main-color-opacity));
+	--color-white-transparent: rgba(255, 255, 255, var(--accent-color-transparency));
   --color-black: black;
-  --semi-accent-color-opacity: 0.2;
-  --accent-color: rgba(var(--main-color-prop), var(--main-color-opacity));
-  --semi-accent-color: rgba(
+  --accent-color-transparency: 0.7;
+  --accent-color: rgb(var(--main-color-prop));
+  --accent-color-transparent: rgba(
     var(--main-color-prop),
-    var(--semi-accent-color-opacity)
+    var(--accent-color-transparency)
   );
+	--color-backlog: rgba(120, 120, 150, var(--accent-color-transparency));
+	--color-todo: rgba(200, 0, 100, var(--accent-color-transparency));
+	--color-inProgress: rgba(0, 100, 0, var(--accent-color-transparency));
+	--color-done: rgba(0, 50, 150, var(--accent-color-transparency));
 }
 
 #root {
@@ -41,7 +44,7 @@
   margin: 0;
   background-image: radial-gradient(
     circle,
-    var(--semi-accent-color) 2px,
+    rgba(var(--main-color-prop), .2) 2px,
     transparent 1px
   );
   background-size: 20px 20px;

@@ -1,112 +1,164 @@
-import { FormEvent, useRef, useState, lazy } from "react";
-import { useAuth } from "../../contexts/auth.context";
-import { FormViews } from "../../utils/constants";
-import "./auth.styles.css";
+import { useState, lazy, ChangeEvent, FormEvent } from 'react';
+import { useAuth } from '../../contexts/auth.context';
+import './auth.styles.css';
 
-const Button = lazy(() => import("../button"));
-const Panel = lazy(() => import("../panel"));
-const Input = lazy(() => import("../input"));
+const Button = lazy(() => import('../button'));
+const Input = lazy(() => import('../input'));
+const Panel = lazy(() => import('../panel'));
 
 type AuthProps = {
-  isActive: boolean;
-  togglePanel: () => void;
+	isActive: boolean;
+	togglePanel: () => void;
+};
+
+type Credentials = {
+	email: string;
+	password: string;
+	name: string;
+	passwordConfirmation?: string;
 };
 
 export const Auth = ({ isActive, togglePanel }: AuthProps) => {
-  const { login, sign_up } = useAuth();
-  const [error, setError] = useState("");
-  const [formView, setFormView] = useState(FormViews.LOGIN);
-  const [loading, setLoading] = useState(false);
+	const { login, signup, logout, currentUser } = useAuth();
+	const [hasAccount, setHasAccount] = useState<boolean>(false);
+	const initialCredentials = {
+		email: '',
+		password: '',
+		name: currentUser?.displayName || '',
+		passwordConfirmation: '',
+	};
+	const [credentials, setCredentials] =
+		useState<Credentials>(initialCredentials);
+	const [loading, setLoading] = useState<boolean>(false);
 
-  const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const passwordConfirmationRef = useRef<
-    HTMLInputElement | HTMLTextAreaElement
-  >(null);
+	const handleChangeInput = (
+		event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		setCredentials((prev) => ({
+			...prev,
+			[event.target.name]: event.target.value,
+		}));
+	};
 
-  const toggleFormView = () => {
-    setFormView((prev) =>
-      prev === FormViews.LOGIN ? FormViews.SIGN_UP : FormViews.LOGIN,
-    );
-  };
+	const handleSubmit = async (event: FormEvent) => {
+		event.preventDefault();
+		setLoading(true);
 
-  const submitButtonText =
-    formView === FormViews.LOGIN ? "Log In" : "Create An Account";
+		if (!hasAccount) {
+			if (credentials.password === credentials.passwordConfirmation) {
+				try {
+					await signup(
+						credentials.name,
+						credentials.email,
+						credentials.password
+					);
+					setCredentials(initialCredentials);
+					console.log('CREDS: ', credentials);
+				} catch (err) {
+					console.log('Failed to crete an account', err);
+				} finally {
+					setLoading(false);
+				}
+			}
+		} else {
+			try {
+				await login(credentials.email, credentials.password);
+				setCredentials(initialCredentials);
+				console.log('CREDS: ', credentials);
+			} catch (err) {
+				console.log('Error', err);
+			} finally {
+				setLoading(false);
+			}
+		}
+	};
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (emailRef.current?.value && passwordRef.current?.value) {
-      if (formView === FormViews.LOGIN) {
-        try {
-          setError("");
-          await login(emailRef.current?.value, passwordRef.current?.value);
-        } catch {
-          setError("Failed to log in");
-        }
-      } else {
-        if (
-          passwordRef.current?.value !== passwordConfirmationRef.current?.value
-        ) {
-          return setError("Passwords do not match");
-        }
+	return (
+		<section className='auth'>
+			<Button
+				mod='icon bordered auth'
+				onClick={togglePanel}
+				aria-label='open authentication menu'
+			/>
+			<Panel
+				isActive={isActive}
+				mod='auth'
+				filled={true}
+				title='Аутентификация'
+			>
+				{currentUser?.uid ? (
+					<Button mod='wide secondary' onClick={logout} aria-label='log out'>
+						Log Out
+					</Button>
+				) : (
+					<>
+						<form onSubmit={handleSubmit}>
+							{!hasAccount && (
+								<Input
+									id='name'
+									name='name'
+									type='name'
+									label='Name'
+									onChange={handleChangeInput}
+									required
+								/>
+							)}
+							<Input
+								id='email'
+								name='email'
+								type='email'
+								label='Email'
+								onChange={handleChangeInput}
+								required
+								autoComplete='off'
+							/>
+							<Input
+								id='password'
+								name='password'
+								type='password'
+								label='Password'
+								onChange={handleChangeInput}
+								required
+								minLength={6}
+								autoComplete='off'
+							/>
+							{!hasAccount && (
+								<Input
+									id='passwordConfirmation'
+									name='passwordConfirmation'
+									type='password'
+									label='Confirm Password'
+									onChange={handleChangeInput}
+									required
+									minLength={6}
+								/>
+							)}
+							{hasAccount ? (
+								<p className='auth__notification'>
+									<u onClick={() => setHasAccount(false)} role='button'>
+										Create an account
+									</u>
+								</p>
+							) : (
+								<p className='auth__notification'>
+									Already have an account?{' '}
+									<u onClick={() => setHasAccount(true)} role='button'>
+										Log In
+									</u>
+								</p>
+							)}
 
-        try {
-          setError("");
-          setLoading(true);
-          await sign_up(emailRef.current?.value, passwordRef.current?.value);
-          setFormView(FormViews.LOGIN);
-        } catch {
-          setError("Failed to crete an account");
-        }
-        setLoading(false);
-      }
-    }
-  }
-
-  return (
-    <>
-      <Button mod="icon auth" onClick={togglePanel} />
-      <Panel isActive={isActive} mod="auth">
-        <form onSubmit={handleSubmit} className="form">
-          <Input type="email" id="email" label="Email" ref={emailRef} />
-          <Input
-            type="password"
-            id="password"
-            label="Password"
-            ref={passwordRef}
-          />
-          {formView === FormViews.LOGIN ? (
-            <p style={{ textAlign: "right" }}>
-              Need an account?{" "}
-              <u role="button" onClick={toggleFormView}>
-                Sign Up
-              </u>
-            </p>
-          ) : (
-            <>
-              <Input
-                type="password"
-                id="passwordConfirmation"
-                label="Password Confirmation"
-                ref={passwordConfirmationRef}
-                required
-              />
-              <p style={{ textAlign: "right" }}>
-                Already have an account?{" "}
-                <u role="button" onClick={toggleFormView}>
-                  Log In
-                </u>
-              </p>
-            </>
-          )}
-          <Button mod="wide" type="submit" disabled={loading}>
-            {submitButtonText}
-          </Button>
-          {error && (
-            <p style={{ color: "red", textAlign: "center" }}>{error}</p>
-          )}
-        </form>
-      </Panel>
-    </>
-  );
+							<Button
+								mod='wide'
+								type='submit'
+								actionClass={loading ? 'loading' : ''}
+							>
+								Submit
+							</Button>
+						</form>
+					</>
+				)}
+			</Panel>
+		</section>
+	);
 };

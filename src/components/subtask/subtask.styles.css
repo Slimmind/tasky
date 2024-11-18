@@ -1,0 +1,36 @@
+.subtask {
+	position: relative;
+	padding: 10px 10px 10px 45px;
+	font-size: 16px;
+}
+
+.subtask::before {
+	content: '';
+	position: absolute;
+	top: calc(50% - 16px);
+	left: 4px;
+	width: 32px;
+	height: 32px;
+	background-color: var(--color-white);
+	border: var(--border-width) solid var(--accent-color-transparent);
+	border-radius: var(--radius-small);
+}
+
+.subtask::after {
+	content: '';
+	position: absolute;
+	top: calc(50% - 13px);
+	left: 14px;
+	width: 12px;
+	height: 20px;
+	border-right: var(--border-width) solid var(--accent-color-transparent);
+	border-bottom: var(--border-width) solid var(--accent-color-transparent);
+	opacity: 0;
+	transform: scale(.8) rotate(45deg);
+	transition: opacity .3s, transform .3s ease-in-out;
+}
+
+.subtask--checked::after {
+	opacity: 1;
+	transform: scale(1) rotate(45deg);
+}

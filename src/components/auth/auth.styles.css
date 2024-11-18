@@ -1,3 +1,12 @@
 .auth {
 
 }
+
+.auth form {
+	margin-bottom: 40px;
+}
+
+.auth__notification {
+	margin-bottom: 12px;
+	text-align: right;
+}

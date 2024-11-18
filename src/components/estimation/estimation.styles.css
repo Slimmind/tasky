@@ -1,0 +1,29 @@
+.estimation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.estimation__value {
+	min-width: fit-content;
+	margin-right: 10px;
+}
+
+.estimation__graph {
+	position: relative;
+	display: flex;
+	flex-basis: 100%;
+	height: 4px;
+	border-radius: 2px;
+	background-color: var(--color-white);
+	overflow: hidden;
+}
+
+.estimation__graph-spent {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 4px;
+	border-radius: 2px;
+	background-color: green;
+}

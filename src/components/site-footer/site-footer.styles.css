@@ -1,9 +1,6 @@
 .site-footer {
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 10px 40px;
+  padding-top: 20px;
 }
 
 .site-footer::before {
@@ -13,7 +10,25 @@
   left: 50%;
   width: calc(100% - 20px);
   height: 10px;
-  background-color: var(--accent-color);
+  background-color: var(--accent-color-transparent);
   border-radius: 5px;
   transform: translateX(-50%);
+}
+
+.site-footer__controls {
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+	padding: 0 10px 10px;
+}
+
+.site-footer__copyright {
+	display: block;
+	padding: 5px 10px 15px;
+	background-color: var(--accent-color-transparent);
+	-webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+	color: var(--color-white-transparent);
+	font-size: 12px;
+	text-align: center;
 }

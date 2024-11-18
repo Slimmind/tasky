@@ -1,0 +1,14 @@
+.tasks {
+	padding: 10px;
+	height: 100%;
+}
+
+.tasks__group-list {
+	display: flex;
+	max-width: calc(100vw - 20px);
+	height: 100%;
+	gap: 10px;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}

@@ -1,8 +1,10 @@
 .clock {
+  min-width: 100px;
   padding: 5px 10px;
-  background-color: var(--accent-color);
+  background-color: var(--accent-color-transparent);
   border-radius: 20px;
   color: var(--color-white);
+  text-align: center;
 }
 
 .panel--clock {

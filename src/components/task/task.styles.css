@@ -1,0 +1,40 @@
+.task {
+	-webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+	border: var(--border-width) solid var(--accent-color-transparent);
+	border-radius: var(--radius-main);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.task__title {
+	padding: 5px 10px;
+}
+
+.task__description {
+	display: block;
+	padding: 0 10px;
+	font-size: 16px;
+}
+
+.task__subtasks {
+	padding: 0 10px;
+}
+
+.task__footer {
+	padding: 5px 10px 1px;
+	background-color: var(--accent-color-transparent);
+	-webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+	color: var(--color-white);
+	font-size: 14px;
+}
+
+.task--backlog {
+	border-color: var(--color-backlog);
+	color: var(--color-backlog);
+}
+
+.task--backlog .task__footer {
+	background-color: var(--color-backlog);
+}

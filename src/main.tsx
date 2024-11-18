@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AuthProvider } from './contexts/auth.context';
+import { FirestoreProvider } from './contexts/firestore.context.tsx';
 import App from './App.tsx';
 
 if ('serviceWorker' in navigator) {
@@ -19,7 +20,9 @@ if ('serviceWorker' in navigator) {
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<AuthProvider>
-			<App />
+			<FirestoreProvider>
+				<App />
+			</FirestoreProvider>
 		</AuthProvider>
 	</StrictMode>
 );

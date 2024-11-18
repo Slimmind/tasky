@@ -1,16 +1,31 @@
-export const appColors = [
-	'46, 139, 130',
-	'150,0,0',
-	'0,120,0',
-	'0,0,150',
-	'254, 178, 54',
-	'102, 51, 153',
-	'150, 150, 150',
-];
+export type SubtaskType = {
+	id: string;
+	value: string;
+	checked: boolean;
+};
 
-export type ColorOption = {
-	isActive: boolean;
-	color: string;
+export type TimeUnits = {
+	w: number;
+	d: number;
+	h: number;
+	m: number;
+};
+
+export type TaskTimeType = {
+	estimation: string;
+	estimationTime: number;
+	spentTime: number;
+	leftTime: number;
+	overTime: number;
+};
+
+export type TaskType = {
+	id: string;
+	type: 'backlog' | 'todo' | 'inProgress' | 'done';
+	title: string;
+	description?: string;
+	subtasks?: SubtaskType[];
+	time: TaskTimeType;
 };
 
 export const FormViews = {
@@ -18,9 +33,29 @@ export const FormViews = {
 	SIGN_UP: 'sign_up',
 };
 
-export type PanelTypes = 'menu' | 'search' | 'auth' | 'add' | null;
+export type PanelTypes = 'search' | 'auth' | 'add' | null;
 
-export const Themes = {
-	DARK: 'dark',
-	LIGHT: 'light',
+export type UserType = {
+	displayName: string;
+	email: string;
+	password: string;
+	createdAt: Date;
+	tasks: TaskType[];
+	time: TaskTimeType;
+};
+
+export const TaskTemplate = {
+	id: '',
+	type: '',
+	title: '',
+	description: '',
+	isActive: false,
+	subtasks: [],
+	time: {
+		estimation: '',
+		estimationTime: 0,
+		spentTime: 0,
+		leftTime: 0,
+		overTime: 0,
+	},
 };
