@@ -7,7 +7,7 @@
 .subtask::before {
 	content: '';
 	position: absolute;
-	top: calc(50% - 16px);
+	top: 4px;
 	left: 4px;
 	width: 32px;
 	height: 32px;
@@ -19,7 +19,7 @@
 .subtask::after {
 	content: '';
 	position: absolute;
-	top: calc(50% - 13px);
+	top: 7px;
 	left: 14px;
 	width: 12px;
 	height: 20px;

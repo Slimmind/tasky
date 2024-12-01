@@ -1,7 +1,7 @@
 .task-group {
 	flex-shrink: 0;
+	/* height: calc(100dvh - 200px); */
 	width: calc(100vw - 20px);
-	border: 1px dashed;
 	scroll-snap-align: start;
 }
 
@@ -15,6 +15,11 @@
 	color: var(--color-white);
 	text-align: center;
 	text-transform: uppercase;
+}
+
+.task-group__body {
+	max-height: calc(100dvh - 235px);
+	overflow: auto;
 }
 
 .task-group--backlog .task-group__header {

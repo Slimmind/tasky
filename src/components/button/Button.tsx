@@ -24,7 +24,7 @@ const isAnchorProps = (props: Props): props is AnchorProps => 'href' in props;
 export const Button = (props: Props) => {
 	const { mod, actionClass, ...restProps } = props;
 	const classes = `btn ${mod && getMod('btn', mod)} ${
-		actionClass && getMod('btn', actionClass)
+		actionClass ? getMod('btn', actionClass) : ''
 	}`;
 
 	if (isAnchorProps(props)) {

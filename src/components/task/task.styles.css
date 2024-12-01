@@ -1,4 +1,5 @@
 .task {
+	margin-bottom: 10px;
 	-webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
 	border: var(--border-width) solid var(--accent-color-transparent);
@@ -7,25 +8,37 @@
 	overflow: hidden;
 }
 
+.task__header {
+	display: flex;
+}
+
+.task__header-controls {
+	flex-shrink: 0;
+}
+
+.task__header-controls .btn {
+	margin: 4px 4px 0 0;
+}
+
 .task__title {
+	flex-grow: 1;
 	padding: 5px 10px;
 }
 
 .task__description {
 	display: block;
+  margin-bottom: 10px;
 	padding: 0 10px;
 	font-size: 16px;
 }
 
 .task__subtasks {
-	padding: 0 10px;
+	padding: 0 10px 10px;
 }
 
 .task__footer {
 	padding: 5px 10px 1px;
 	background-color: var(--accent-color-transparent);
-	-webkit-backdrop-filter: var(--blur);
-  backdrop-filter: var(--blur);
 	color: var(--color-white);
 	font-size: 14px;
 }
@@ -37,4 +50,51 @@
 
 .task--backlog .task__footer {
 	background-color: var(--color-backlog);
+}
+
+.task--backlog .subtask::before,
+.task--backlog .subtask::after {
+	border-color: var(--color-backlog);
+}
+
+.task--todo {
+	border-color: var(--color-todo);
+	color: var(--color-todo);
+}
+
+.task--todo .task__footer {
+	background-color: var(--color-todo);
+}
+
+.task--todo .subtask::before,
+.task--todo .subtask::after {
+	border-color: var(--color-todo);
+}
+
+.task--inProgress {
+	border-color: var(--color-inProgress);
+	color: var(--color-inProgress);
+}
+
+.task--inProgress .task__footer {
+	background-color: var(--color-inProgress);
+}
+
+.task--inProgress .subtask::before,
+.task--inProgress .subtask::after {
+	border-color: var(--color-inProgress);
+}
+
+.task--done {
+	border-color: var(--color-done);
+	color: var(--color-done);
+}
+
+.task--done .task__footer {
+	background-color: var(--color-done);
+}
+
+.task--done .subtask::before,
+.task--done .subtask::after {
+	border-color: var(--color-done);
 }

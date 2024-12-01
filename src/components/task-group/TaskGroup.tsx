@@ -12,7 +12,7 @@ export const TaskGroup = ({ group, tasks }: TaskGroupProps) => {
 	return (
 		<li className={`task-group task-group--${group}`}>
 			<header className='task-group__header'>{group}</header>
-			<ul>
+			<ul className='task-group__body'>
 				{groupedTasks.map((task) => (
 					<Task key={task.id} data={task} />
 				))}
