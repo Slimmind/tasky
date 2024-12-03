@@ -13,7 +13,7 @@
   line-height: 1.2;
   font-optical-sizing: auto;
 
-  --blur: blur(2px);
+  --blur: blur(4px);
   --shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 	--radius-main: 1rem;
 	--radius-small: .5rem;
@@ -49,6 +49,7 @@
   );
   background-size: 20px 20px;
   color: var(--accent-color);
+	overflow: hidden;
 }
 
 main {

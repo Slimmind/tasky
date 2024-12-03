@@ -37,3 +37,10 @@
 .task-group--done .task-group__header {
 	background-color: var(--color-done);
 }
+
+@media (min-width: 960px) {
+	.task-group {
+		width: calc(25% - 7.5px);
+		gap: 10px;
+	}
+}

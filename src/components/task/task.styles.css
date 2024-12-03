@@ -8,6 +8,10 @@
 	overflow: hidden;
 }
 
+.task:last-of-type {
+	margin-bottom: 0;
+}
+
 .task__header {
 	display: flex;
 }
