@@ -10,7 +10,7 @@ export const Skeleton = () => {
 				<div
 					key={idx}
 					className='skeleton__item'
-					style={{ animation: `skeleton 1s ${0.2 * idx}s infinite` }}
+					style={{ animation: `skeleton 3s linear ${0.5 * idx}s infinite` }}
 				></div>
 			))}
 		</div>

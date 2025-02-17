@@ -1,9 +1,8 @@
 import { useFirestore } from '../../contexts/firestore.context';
+import { taskGroupList } from '../../utils/constants';
 import Skeleton from '../skeleton';
 import TaskGroup from '../task-group';
 import './tasks.styles.css';
-
-const taskGroupList = ['backlog', 'todo', 'inProgress', 'done'];
 
 export const Tasks = () => {
 	const { tasks } = useFirestore();
