@@ -1,14 +1,16 @@
+// import { lazy, useEffect, useState } from 'react';
 import { useEffect, useState } from 'react';
 import './clock.styles.css';
-import Panel from '../panel';
+
+// const Panel = lazy(() => import('../panel'));
 
 export const Clock = () => {
 	const [time, setTime] = useState<string>('');
-	const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+	// const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
-	const toggleMenu = (): void => {
-		setIsMenuVisible((prev) => !prev);
-	};
+	// const toggleMenu = (): void => {
+	// 	setIsMenuVisible((prev) => !prev);
+	// };
 
 	const updateTime = () => {
 		const currentTime = new Date();
@@ -29,10 +31,11 @@ export const Clock = () => {
 	}, []);
 	return (
 		<>
-			<div className='clock' onClick={toggleMenu}>
+			{/* <div className='clock' onClick={toggleMenu}> */}
+			<div className='clock'>
 				{time}
 			</div>
-			<Panel isActive={isMenuVisible} mod='clock'></Panel>
+			{/* <Panel isActive={isMenuVisible} mod='clock'></Panel> */}
 		</>
 	);
 };

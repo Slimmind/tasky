@@ -1,14 +1,14 @@
-import { useFirestore } from '../../contexts/firestore.context';
+import { lazy } from 'react';
+import { useTasks } from '../../context/task.context';
 import { taskGroupList } from '../../utils/constants';
-import Skeleton from '../skeleton';
-import TaskGroup from '../task-group';
 import './tasks.styles.css';
 
-export const Tasks = () => {
-	const { tasks } = useFirestore();
-	// const { tasks } = [];
+const TaskGroup = lazy(() => import('../task-group'));
 
-	return tasks?.length > 0 ? (
+export const Tasks = () => {
+	const { tasks } = useTasks();
+
+	return (
 		<div className='tasks'>
 			<ul className='tasks__group-list'>
 				{taskGroupList.map((group: string) => (
@@ -16,7 +16,5 @@ export const Tasks = () => {
 				))}
 			</ul>
 		</div>
-	) : (
-		<Skeleton />
-	);
+  )
 };

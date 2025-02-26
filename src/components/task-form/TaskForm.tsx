@@ -1,12 +1,12 @@
-import { ChangeEvent, FormEvent, useState, lazy } from 'react';
-import { nanoid } from 'nanoid';
-import { useFirestore } from '../../contexts/firestore.context';
-import { TaskType, SubtaskType } from '../../utils/constants';
-import { estimationToMinutes } from '../../utils/estimation-to-minutes';
+import { ChangeEvent, FormEvent, useState, useEffect, lazy } from "react";
+import { nanoid } from "nanoid";
+import { TaskType, SubtaskType } from "../../utils/constants";
+import { useTasks } from "../../context/task.context";
+import { estimationToMinutes } from "../../utils/estimation-to-minutes";
 
-const Panel = lazy(() => import('../panel'));
-const Button = lazy(() => import('../button'));
-const Input = lazy(() => import('../input'));
+const Panel = lazy(() => import("../panel"));
+const Button = lazy(() => import("../button"));
+const Input = lazy(() => import("../input"));
 
 type TaskFormProps = {
   taskId?: string;
@@ -15,174 +15,108 @@ type TaskFormProps = {
 };
 
 export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
-  const { tasks, addTask, changeTask } = useFirestore();
+  // alert(taskId);
+  const { tasks, addTask, changeTask } = useTasks();
+  const currentTask = tasks.find((task) => task.id === taskId);
 
-  const currentTask = tasks.find((task: TaskType) => task.id === taskId);
-  const initializeFields = (arr: SubtaskType[] = []): SubtaskType[] =>
-    arr.length > 0 ? arr : [{ id: nanoid(), value: '', checked: false }];
+  const initializeSubtasks = (arr: SubtaskType[] = []): SubtaskType[] =>
+    arr.length ? arr : [{ id: nanoid(), value: "", checked: false }];
 
-  const [title, setTitle] = useState<string>(currentTask?.title ?? '');
-  const [description, setDescription] = useState<string>(
-    currentTask?.description ?? ''
-  );
-  const [subtasks, setSubtasks] = useState<SubtaskType[]>(
-    initializeFields(currentTask?.subtasks)
-  );
-  const [estimation, setEstimation] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [subtasks, setSubtasks] = useState<SubtaskType[]>(initializeSubtasks());
+  const [estimation, setEstimation] = useState<string>("");
 
-  const handleOriginalChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setTitle(event.target.value);
+  useEffect(() => {
+    if (currentTask) {
+      setTitle(currentTask.title ?? '');
+      setDescription(currentTask.description ?? '');
+      setSubtasks(initializeSubtasks(currentTask.subtasks ?? []));
+    }
+  }, [currentTask]);
+
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => 
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setter(event.target.value);
+
+  const handleSubtaskChange = (index: number) => 
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setSubtasks((prev) =>
+        prev.map((field, i) => (i === index ? { ...field, value: event.target.value } : field))
+      );
+    };
+
+  const addSubtask = () => {
+    setSubtasks((prev) => [...prev, { id: nanoid(), value: "", checked: false }]);
   };
 
-  const handleDescriptionChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setDescription(event.target.value);
+  const removeSubtask = (fieldId: string) => {
+    setSubtasks((prev) => prev.filter((field) => field.id !== fieldId));
   };
-
-  const handleFieldChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    index: number,
-    setField: React.Dispatch<React.SetStateAction<SubtaskType[]>>
-  ) => {
-    const { value } = event.target;
-    setField((prevFields) =>
-      prevFields.map((field, i) => (i === index ? { ...field, value } : field))
-    );
-  };
-
-  const handleEstimationChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { value } = event.target;
-
-    setEstimation(value);
-  }
-
-  const addField = (
-    setField: React.Dispatch<React.SetStateAction<SubtaskType[]>>
-  ) => {
-    setField((prevFields) => [
-      ...prevFields,
-      { id: nanoid(), value: '', checked: false },
-    ]);
-  };
-
-  const removeField = (
-    setField: React.Dispatch<React.SetStateAction<SubtaskType[]>>,
-    fieldId: string
-  ) => {
-    setField((prevFields) =>
-      prevFields.filter((field) => field.id !== fieldId)
-    );
-  };
-
-  const renderSubtaskFields = (
-    fields: SubtaskType[],
-    setField: React.Dispatch<React.SetStateAction<SubtaskType[]>>,
-    placeholder: string,
-    inputType: 'text' | 'textarea' = 'text'
-  ) =>
-    fields.map((field, index) => (
-      <Input
-        key={field.id}
-        id={field.id}
-        type={inputType}
-        placeholder={
-          fields.length > 1 ? `${placeholder}-${index + 1}` : placeholder
-        }
-        value={field.value}
-        onChange={(event) => handleFieldChange(event, index, setField)}
-      >
-        <Button
-          type='button'
-          mod={`icon filled ${index === 0 ? 'plus' : 'minus'}`}
-          onClick={() =>
-            index === 0 ? addField(setField) : removeField(setField, field.id)
-          }
-        />
-      </Input>
-    ));
 
   const submitForm = (event: FormEvent) => {
     event.preventDefault();
-    const newItem = buildItem();
+    const newTask = buildTask();
 
     if (taskId) {
-      changeTask(taskId, newItem);
+      changeTask(taskId, newTask);
     } else {
-      addTask(newItem);
-      console.log('TASK: ', newItem);
+      addTask(newTask);
     }
-
-    resetFields();
+    resetForm();
     togglePanel();
   };
 
-  const checkSubtaskDetails = (arr: SubtaskType[]): SubtaskType[] =>
-    arr[0].value ? arr : [];
+  const buildTask = (): TaskType => ({
+    id: nanoid(),
+    type: "backlog",
+    title,
+    description,
+    isActive: false,
+    subtasks: subtasks[0].value ? subtasks : [],
+    time: {
+      estimation,
+      estimationTime: estimationToMinutes(estimation),
+      spentTime: 0,
+      leftTime: 0,
+      overTime: 0,
+    },
+  });
 
-  const buildItem = (): TaskType => {
-    return {
-      id: nanoid(),
-      type: 'backlog',
-      title,
-      description,
-      subtasks: checkSubtaskDetails(subtasks),
-      time: {
-        estimation,
-        estimationTime: estimationToMinutes(estimation),
-        spentTime: 0,
-        leftTime: 0,
-        overTime: 0
-      }
-    };
-  };
-
-  const resetFields = () => {
-    setTitle('');
-    setDescription('');
-    setSubtasks(initializeFields());
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setSubtasks(initializeSubtasks());
+    setEstimation("");
   };
 
   return (
     <>
       <Button
-        mod='icon add'
+        mod="icon add"
         onClick={togglePanel}
-        aria-label={`${taskId ? 'Edit Task' : 'Add Task'}`}
+        aria-label={taskId ? "Edit Task" : "Add Task"}
       />
-      <Panel
-        isActive={isActive}
-        title={`${taskId ? 'Edit task' : 'Create a new task'}`}
-      >
+      <Panel isActive={isActive} title={taskId ? "Edit task" : "Create a new task"}>
         <form onSubmit={submitForm}>
-          <Input
-            id='title'
-            value={title}
-            onChange={handleOriginalChange}
-            type='text'
-            placeholder='Title...'
-          />
-          <Input
-            id='description'
-            value={description}
-            onChange={handleDescriptionChange}
-            type='textarea'
-            placeholder='Description...'
-          />
-          {renderSubtaskFields(subtasks, setSubtasks, 'Subtask', 'textarea')}
-          <Input
-            id='estimation'
-            value={estimation}
-            onChange={handleEstimationChange}
-            type='text'
-            placeholder='Estimation: 1w 2d 3h 4m'
-          />
+          <Input id="title" value={title} onChange={handleInputChange(setTitle)} type="text" placeholder="Title..." />
+          <Input id="description" value={description} onChange={handleInputChange(setDescription)} type="textarea" placeholder="Description..." />
 
-          <Button type='submit' mod='wide'>
-            {taskId ? 'Save Changes' : 'Submit'}
-          </Button>
+          {subtasks.map((field, index) => (
+            <Input
+              key={field.id}
+              id={field.id}
+              type="text"
+              placeholder={`Subtask-${index + 1}`}
+              value={field.value}
+              onChange={handleSubtaskChange(index)}
+            >
+              <Button type="button" mod={`icon filled ${index === 0 ? "plus" : "minus"}`} onClick={() => (index === 0 ? addSubtask() : removeSubtask(field.id))} />
+            </Input>
+          ))}
+
+          <Input id="estimation" value={estimation} onChange={handleInputChange(setEstimation)} type="text" placeholder="Estimation: 1w 2d 3h 4m" />
+
+          <Button type="submit" mod="wide">{taskId ? "Save Changes" : "Submit"}</Button>
         </form>
       </Panel>
     </>

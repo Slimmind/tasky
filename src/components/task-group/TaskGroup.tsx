@@ -1,6 +1,8 @@
+import { lazy } from 'react';
 import { TaskType } from '../../utils/constants';
-import { Task } from '../task/Task';
 import './task-group.styles.css';
+
+const Task = lazy(() => import('../task'));
 
 type TaskGroupProps = {
 	group: string;

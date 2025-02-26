@@ -49,6 +49,7 @@ export type TaskType = {
 	type: TaskVariantType;
 	title: string;
 	description?: string;
+  isActive: boolean;
 	subtasks: SubtaskType[];
 	time: TaskTimeType;
 };
