@@ -1,11 +1,30 @@
 .welcome {
-  margin: 10px;
-  padding: 10px;
-  background-color: var(--accent-color-transparent);
-  border-radius: var(--radius-main);
-  color: var(--color-white);
+  text-align: center;
 }
 
-.welcome__title {
+.welcome__title,
+.welcome__subtitle {
   margin-bottom: 20px;
+}
+
+.welcome::before,
+.welcome::after {
+  content: '';
+  position: absolute;
+  animation: topDown 3s ease-in-out infinite;
+}
+
+.welcome::before {
+  bottom: 100px;
+  left: calc(50% - 20px);
+  width: 40px;
+  height: 60px;
+  background-color: var(--color-white-transparent);
+}
+
+.welcome::after {
+  bottom: 0;
+  left: calc(50% - 50px);
+  border: 50px solid transparent;
+  border-top-color: var(--color-white-transparent);
 }

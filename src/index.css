@@ -78,3 +78,15 @@ ul {
 .form p {
 	margin-bottom: 20px;
 }
+
+@keyframes topDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

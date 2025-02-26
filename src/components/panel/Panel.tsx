@@ -21,7 +21,8 @@ export const Panel = ({
 		'panel',
 		filled && 'panel--filled',
 		isActive && 'panel--opened',
-		mod && getMod('panel', mod)
+		mod && getMod('panel', mod),
+		mod
 	);
 
 	const panelHeader = title ? (

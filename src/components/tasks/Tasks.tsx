@@ -9,12 +9,14 @@ export const Tasks = () => {
 	const { tasks } = useTasks();
 
 	return (
-		<div className='tasks'>
-			<ul className='tasks__group-list'>
-				{taskGroupList.map((group: string) => (
-					<TaskGroup key={group} group={group} tasks={tasks} />
-				))}
-			</ul>
-		</div>
-  )
+		tasks.length > 0 && (
+			<div className='tasks'>
+				<ul className='tasks__group-list'>
+					{taskGroupList.map((group: string) => (
+						<TaskGroup key={group} group={group} tasks={tasks} />
+					))}
+				</ul>
+			</div>
+		)
+	);
 };
