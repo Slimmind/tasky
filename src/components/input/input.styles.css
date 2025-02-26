@@ -146,7 +146,8 @@ textarea {
 input::placeholder,
 textarea::placeholder {
   color: var(--accent-color-transparent);
-  font-size: 18px;
+  font-size: 16px;
+  font-family: monospace;
 }
 
 label {
@@ -179,12 +180,6 @@ label + .input__wrap textarea {
   background-color: var(--accent-color);
   border-radius: 0 var(--radius-small) var(--radius-small) 0;
   box-shadow: none;
-}
-
-.input__wrap .btn--plus::before,
-.input__wrap .btn--minus::before,
-.input__wrap .btn--plus::after {
-  background-color: var(--color-bg);
 }
 
 .input__wrap .btn--wide {

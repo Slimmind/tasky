@@ -64,9 +64,6 @@
 }
 
 .btn--add::before,
-.btn--plus::before,
-.btn--minus::before,
-.btn--plus::after,
 .btn--add::after {
   top: calc(50% - 2px);
   left: calc(50% - 18px);
@@ -84,9 +81,12 @@
 .btn--plus::before,
 .btn--minus::before,
 .btn--plus::after {
-  left: calc(50% - 15px);
-	width: 30px;
+  top: calc(50% - 2px);
+  left: calc(50% - 12px);
+	width: 24px;
+  height: 4px;
 	background-color: var(--color-white);
+  border-radius: 2px;
 }
 
 .btn--wide {

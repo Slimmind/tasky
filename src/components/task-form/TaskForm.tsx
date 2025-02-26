@@ -136,6 +136,7 @@ export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
 							<Button
 								type='button'
 								mod={`icon filled ${index === 0 ? 'plus' : 'minus'}`}
+                aria-label={index === 0 ? 'add subtask' : 'remove subtask'}
 								onClick={() =>
 									index === 0 ? addSubtask() : removeSubtask(field.id)
 								}
@@ -148,11 +149,11 @@ export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
 						value={estimation}
 						onChange={handleInputChange(setEstimation)}
 						type='text'
-						placeholder='Estimation: 1w 2d 3h 4m'
+						placeholder='Время на выполонение: 1н 2д 3ч 4м'
 					/>
 
 					<Button type='submit' mod='wide'>
-						{taskId ? 'Save Changes' : 'Submit'}
+						{taskId ? 'Сохранить' : 'Создать'}
 					</Button>
 				</form>
 			</Panel>
