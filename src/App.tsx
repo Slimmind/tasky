@@ -8,6 +8,7 @@ const SiteHeader = lazy(() => import('./components/site-header'));
 const SiteFooter = lazy(() => import('./components/site-footer'));
 const Welcome = lazy(() => import('./components/welcome'));
 const Tasks = lazy(() => import('./components/tasks'));
+const TaskForm = lazy(() => import('./components/task-form'));
 
 function App() {
 	const [activePanel, setActivePanel] = useState<PanelTypes>(null);
@@ -19,7 +20,13 @@ function App() {
 				<ErrorBoundary>
 					<main>
 						<Welcome />
-						<Tasks />
+						<Tasks handlePanel={setActivePanel} />
+						<TaskForm
+							isActive={activePanel === 'add'}
+							togglePanel={() =>
+								setActivePanel(activePanel === 'add' ? null : 'add')
+							}
+						/>
 					</main>
 				</ErrorBoundary>
 				<SiteFooter activePanel={activePanel} handlePanel={setActivePanel} />

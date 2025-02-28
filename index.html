@@ -1,54 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/images/icons/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/images/icons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/images/icons/favicon-16x16.png"
-    />
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-      as="style"
-    />
-    <link rel="manifest" href="/manifest.json" />
-    <title>Tasky</title>
-  </head>
 
-  <body>
-    <script async>
-      (async function () {
-        if ("serviceWorker" in navigator) {
-          window.addEventListener("load", () => {
-            navigator.serviceWorker
-              .register("/sw.js")
-              .then((registration) => {
-                console.log("SW registered: ", registration);
-              })
-              .catch((registrationError) => {
-                console.log("SW registration failed: ", registrationError);
-              });
-          });
-        }
-      })();
-    </script>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    (async function () {
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png" />
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" as="style" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Tasky</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
-

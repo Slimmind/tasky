@@ -8,6 +8,7 @@ type PanelProps = {
 	isActive?: boolean;
 	title?: string;
 	mod?: string;
+	taskId?: string;
 } & PropsWithChildren;
 
 export const Panel = ({

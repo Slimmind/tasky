@@ -49,7 +49,7 @@ export type TaskType = {
 	type: TaskVariantType;
 	title: string;
 	description?: string;
-  isActive: boolean;
+	isActive: boolean;
 	subtasks: SubtaskType[];
 	time: TaskTimeType;
 };
@@ -66,7 +66,7 @@ export const taskGroupList = [
 	TaskVariants.DONE,
 ];
 
-export type PanelTypes = 'search' | 'auth' | 'add' | null;
+export type PanelTypes = 'search' | 'auth' | 'add' | 'edit' | null;
 
 export type UserType = {
 	displayName: string;
