@@ -1,16 +1,10 @@
 import { lazy } from 'react';
-import { PanelTypes } from '../../utils/constants';
 import './site-footer.styles.css';
 
-const TaskForm = lazy(() => import('../task-form'));
+const AddTask = lazy(() => import('../add-task'));
 // const Search = lazy(() => import('../search'));
 
-type SiteFooterProps = {
-	activePanel: string | null;
-	handlePanel: (panel: PanelTypes) => void;
-};
-
-export const SiteFooter = ({ activePanel, handlePanel }: SiteFooterProps) => {
+export const SiteFooter = () => {
 	const now = new Date();
 	const currentYear = now.getFullYear();
 	return (
@@ -23,12 +17,7 @@ export const SiteFooter = ({ activePanel, handlePanel }: SiteFooterProps) => {
 							handlePanel(activePanel === 'search' ? null : 'search')
 						}
 					/> */}
-					<TaskForm
-						isActive={activePanel === 'add'}
-						togglePanel={() =>
-							handlePanel(activePanel === 'add' ? null : 'add')
-						}
-					/>
+					<AddTask />
 				</div>
 
 			<small className='site-footer__copyright'>

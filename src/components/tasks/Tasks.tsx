@@ -1,15 +1,11 @@
 import { lazy } from 'react';
 import { useTasks } from '../../context/task.context';
-import { PanelTypes, taskGroupList } from '../../utils/constants';
+import { taskGroupList } from '../../utils/constants';
 import './tasks.styles.css';
-
-type TasksProps = {
-	handlePanel: (panel: PanelTypes) => void;
-};
 
 const TaskGroup = lazy(() => import('../task-group'));
 
-export const Tasks = ({ handlePanel }: TasksProps) => {
+export const Tasks = () => {
 	const { tasks } = useTasks();
 
 	return (
@@ -21,7 +17,6 @@ export const Tasks = ({ handlePanel }: TasksProps) => {
 							key={group}
 							group={group}
 							tasks={tasks}
-							handlePanel={handlePanel}
 						/>
 					))}
 				</ul>

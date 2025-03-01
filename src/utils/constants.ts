@@ -66,6 +66,13 @@ export const taskGroupList = [
 	TaskVariants.DONE,
 ];
 
+export enum PanelViews {
+  ADD = 'add',
+  AUTH = 'auth',
+  EDIT = 'edit',
+  SEARCH = 'search',
+}
+
 export type PanelTypes = 'search' | 'auth' | 'add' | 'edit' | null;
 
 export type UserType = {

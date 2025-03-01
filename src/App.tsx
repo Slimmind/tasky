@@ -1,7 +1,7 @@
-import { useState, lazy, Suspense } from 'react';
-import { PanelTypes } from './utils/constants';
+import { lazy, Suspense } from 'react';
 import Preloader from './components/preloader';
 import './index.css';
+import { usePanel } from './context/panel.context';
 
 const ErrorBoundary = lazy(() => import('./components/error-boundary'));
 const SiteHeader = lazy(() => import('./components/site-header'));
@@ -11,7 +11,7 @@ const Tasks = lazy(() => import('./components/tasks'));
 const TaskForm = lazy(() => import('./components/task-form'));
 
 function App() {
-	const [activePanel, setActivePanel] = useState<PanelTypes>(null);
+	const { activePanel, activeTaskId } = usePanel();
 
 	return (
 		<>
@@ -20,16 +20,13 @@ function App() {
 				<ErrorBoundary>
 					<main>
 						<Welcome />
-						<Tasks handlePanel={setActivePanel} />
-						<TaskForm
-							isActive={activePanel === 'add'}
-							togglePanel={() =>
-								setActivePanel(activePanel === 'add' ? null : 'add')
-							}
-						/>
+						<Tasks />
+            {activePanel === 'edit' && activeTaskId && (
+              <TaskForm taskId={activeTaskId} isActive={true} togglePanel={() => {}} />
+            )}
 					</main>
 				</ErrorBoundary>
-				<SiteFooter activePanel={activePanel} handlePanel={setActivePanel} />
+				<SiteFooter />
 			</Suspense>
 		</>
 	);

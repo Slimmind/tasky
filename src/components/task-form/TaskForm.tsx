@@ -1,4 +1,12 @@
-import { ChangeEvent, FormEvent, useState, useEffect, lazy } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useEffect,
+  lazy,
+  useCallback,
+  memo,
+} from 'react';
 import { nanoid } from 'nanoid';
 import { TaskType, SubtaskType } from '../../utils/constants';
 import { useTasks } from '../../context/task.context';
@@ -9,154 +17,172 @@ const Button = lazy(() => import('../button'));
 const Input = lazy(() => import('../input'));
 
 type TaskFormProps = {
-	taskId?: string;
-	isActive: boolean;
-	togglePanel: () => void;
+  isActive: boolean;
+  togglePanel: () => void;
+  taskId?: string; // Тип string | undefined
 };
 
+// Мемоизированный компонент Input
+const MemoizedInput = memo(Input);
+
 export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
-	// alert(taskId);
-	const { tasks, addTask, changeTask } = useTasks();
-	const currentTask = tasks.find((task) => task.id === taskId);
+  const { tasks, addTask, changeTask } = useTasks();
+  const currentTask = tasks.find((task) => task.id === taskId);
 
-	const initializeSubtasks = (arr: SubtaskType[] = []): SubtaskType[] =>
-		arr.length ? arr : [{ id: nanoid(), value: '', checked: false }];
+  // Ленивая инициализация subtasks
+  const initializeSubtasks = useCallback(
+    (arr: SubtaskType[] = []): SubtaskType[] =>
+      arr.length ? arr : [{ id: nanoid(), value: '', checked: false }],
+    []
+  );
 
-	const [title, setTitle] = useState<string>('');
-	const [description, setDescription] = useState<string>('');
-	const [subtasks, setSubtasks] = useState<SubtaskType[]>(initializeSubtasks());
-	const [estimation, setEstimation] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [subtasks, setSubtasks] = useState<SubtaskType[]>(() =>
+    initializeSubtasks(currentTask?.subtasks)
+  );
+  const [estimation, setEstimation] = useState<string>('');
 
-	useEffect(() => {
-		if (currentTask) {
-			setTitle(currentTask.title ?? '');
-			setDescription(currentTask.description ?? '');
-			setSubtasks(initializeSubtasks(currentTask.subtasks ?? []));
-		}
-	}, [currentTask]);
+  // Инициализация состояния при изменении currentTask
+  useEffect(() => {
+    if (currentTask) {
+      setTitle(currentTask.title ?? '');
+      setDescription(currentTask.description ?? '');
+      setSubtasks(initializeSubtasks(currentTask.subtasks ?? []));
+    }
+  }, [currentTask, initializeSubtasks]);
 
-	const handleInputChange =
-		(setter: React.Dispatch<React.SetStateAction<string>>) =>
-		(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-			setter(event.target.value);
+  // Мемоизированный обработчик изменения input
+  const handleInputChange = useCallback(
+    (setter: React.Dispatch<React.SetStateAction<string>>) =>
+      (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        setter(event.target.value),
+    []
+  );
 
-	const handleSubtaskChange =
-		(index: number) =>
-		(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			setSubtasks((prev) =>
-				prev.map((field, i) =>
-					i === index ? { ...field, value: event.target.value } : field
-				)
-			);
-		};
+  // Мемоизированный обработчик изменения subtask
+  const handleSubtaskChange = useCallback(
+    (index: number) =>
+      (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setSubtasks((prev) =>
+          prev.map((field, i) =>
+            i === index ? { ...field, value: event.target.value } : field
+          )
+        );
+      },
+    []
+  );
 
-	const addSubtask = () => {
-		setSubtasks((prev) => [
-			...prev,
-			{ id: nanoid(), value: '', checked: false },
-		]);
-	};
+  // Мемоизированная функция добавления subtask
+  const addSubtask = useCallback(() => {
+    setSubtasks((prev) => [
+      ...prev,
+      { id: nanoid(), value: '', checked: false },
+    ]);
+  }, []);
 
-	const removeSubtask = (fieldId: string) => {
-		setSubtasks((prev) => prev.filter((field) => field.id !== fieldId));
-	};
+  // Мемоизированная функция удаления subtask
+  const removeSubtask = useCallback((fieldId: string) => {
+    setSubtasks((prev) => prev.filter((field) => field.id !== fieldId));
+  }, []);
 
-	const submitForm = (event: FormEvent) => {
-		event.preventDefault();
-		const newTask = buildTask();
+  // Мемоизированная функция отправки формы
+  const submitForm = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault();
+      const newTask = buildTask();
 
-		if (taskId) {
-			changeTask(taskId, newTask);
-		} else {
-			addTask(newTask);
-		}
-		resetForm();
-		togglePanel();
-	};
+      if (taskId) {
+        changeTask(taskId, newTask);
+      } else {
+        addTask(newTask);
+      }
+      resetForm();
+      togglePanel();
+    },
+    [title, description, subtasks, estimation, taskId, changeTask, addTask, togglePanel]
+  );
 
-	const buildTask = (): TaskType => ({
-		id: nanoid(),
-		type: 'backlog',
-		title,
-		description,
-		isActive: false,
-		subtasks: subtasks[0].value ? subtasks : [],
-		time: {
-			estimation,
-			estimationTime: estimationToMinutes(estimation),
-			spentTime: 0,
-			leftTime: 0,
-			overTime: 0,
-		},
-	});
+  // Функция создания задачи
+  const buildTask = useCallback((): TaskType => ({
+    id: nanoid(),
+    type: 'backlog',
+    title,
+    description,
+    isActive: false,
+    subtasks: subtasks[0].value ? subtasks : [],
+    time: {
+      estimation,
+      estimationTime: estimationToMinutes(estimation),
+      spentTime: 0,
+      leftTime: 0,
+      overTime: 0,
+    },
+  }), [title, description, subtasks, estimation]);
 
-	const resetForm = () => {
-		setTitle('');
-		setDescription('');
-		setSubtasks(initializeSubtasks());
-		setEstimation('');
-	};
+  // Функция сброса формы
+  const resetForm = useCallback(() => {
+    setTitle('');
+    setDescription('');
+    setSubtasks(initializeSubtasks());
+    setEstimation('');
+  }, [initializeSubtasks]);
 
-	return (
-		<>
-			<Button
-				mod='icon add'
-				onClick={togglePanel}
-				aria-label={taskId ? 'Edit Task' : 'Add Task'}
-			/>
-			<Panel
-				isActive={isActive}
-				title={taskId ? 'Редактировать задание' : 'Создать новое задание'}
-			>
-				<form onSubmit={submitForm}>
-					<Input
-						id='title'
-						value={title}
-						onChange={handleInputChange(setTitle)}
-						type='text'
-						placeholder='Заголовок...'
-					/>
-					<Input
-						id='description'
-						value={description}
-						onChange={handleInputChange(setDescription)}
-						type='textarea'
-						placeholder='Описание...'
-					/>
+  return (
+    <Panel
+      isActive={isActive}
+      title={taskId ? 'Редактировать задание' : 'Создать новое задание'}
+    >
+      <form onSubmit={submitForm}>
+        <MemoizedInput
+          id='title'
+          value={title}
+          onChange={handleInputChange(setTitle)}
+          type='text'
+          placeholder='Заголовок...'
+        />
+        <MemoizedInput
+          id='description'
+          value={description}
+          onChange={handleInputChange(setDescription)}
+          type='textarea'
+          placeholder='Описание...'
+        />
 
-					{subtasks.map((field, index) => (
-						<Input
-							key={field.id}
-							id={field.id}
-							type='text'
-							placeholder={`Подзадача-${index + 1}`}
-							value={field.value}
-							onChange={handleSubtaskChange(index)}
-						>
-							<Button
-								type='button'
-								mod={`icon filled ${index === 0 ? 'plus' : 'minus'}`}
-                aria-label={index === 0 ? 'add subtask' : 'remove subtask'}
-								onClick={() =>
-									index === 0 ? addSubtask() : removeSubtask(field.id)
-								}
-							/>
-						</Input>
-					))}
+        {subtasks.map((field, index) => (
+          <MemoizedInput
+            key={field.id}
+            id={field.id}
+            type='text'
+            placeholder={`Подзадача-${index + 1}`}
+            value={field.value}
+            onChange={handleSubtaskChange(index)}
+          >
+            <Button
+              type='button'
+              mod={`icon filled ${index === 0 ? 'plus' : 'minus'}`}
+              aria-label={index === 0 ? 'add subtask' : 'remove subtask'}
+              onClick={() =>
+                index === 0 ? addSubtask() : removeSubtask(field.id)
+              }
+            />
+          </MemoizedInput>
+        ))}
 
-					<Input
-						id='estimation'
-						value={estimation}
-						onChange={handleInputChange(setEstimation)}
-						type='text'
-						placeholder='Время на выполонение: 1н 2д 3ч 4м'
-					/>
+        <MemoizedInput
+          id='estimation'
+          value={estimation}
+          onChange={handleInputChange(setEstimation)}
+          type='text'
+          placeholder='Время на выполонение: 1w 2d 3h 4m'
+          description='Формат: 1w 2d 3h 4m (недели, дни, часы, минуты)'
+          pattern="^(\d+w\s?)?(\d+d\s?)?(\d+h\s?)?(\d+m)?$"
+        />
 
-					<Button type='submit' mod='wide'>
-						{taskId ? 'Сохранить' : 'Создать'}
-					</Button>
-				</form>
-			</Panel>
-		</>
-	);
+        <Button type='submit' mod='wide'>
+          {taskId ? 'Сохранить' : 'Создать'}
+        </Button>
+      </form>
+    </Panel>
+  );
 };

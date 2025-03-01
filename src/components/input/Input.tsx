@@ -46,14 +46,14 @@ export const Input = forwardRef<
 				})}
 				{isChecking && label && <label htmlFor={id}>{label}</label>}
 				{children}
+        {description && <p className='input__description'>{description}</p>}
+        {errorMessage && (
+          <p className='input__error-message'>
+            <WarningIcon />
+            {errorMessage}
+          </p>
+        )}
 			</div>
-			{description && <p className='input__description'>{description}</p>}
-			{errorMessage && (
-				<p className='input__error-message'>
-					<WarningIcon />
-					{errorMessage}
-				</p>
-			)}
 		</div>
 	);
 });
