@@ -11,7 +11,7 @@ const Tasks = lazy(() => import('./components/tasks'));
 const TaskForm = lazy(() => import('./components/task-form'));
 
 function App() {
-	const { activePanel, activeTaskId } = usePanel();
+	const { activePanel, activeTaskId, setActivePanel } = usePanel();
 
 	return (
 		<>
@@ -21,9 +21,13 @@ function App() {
 					<main>
 						<Welcome />
 						<Tasks />
-            {activePanel === 'edit' && activeTaskId && (
-              <TaskForm taskId={activeTaskId} isActive={true} togglePanel={() => {}} />
-            )}
+						{activePanel === 'edit' && activeTaskId && (
+							<TaskForm
+								taskId={activeTaskId}
+								isActive={true}
+								togglePanel={() => setActivePanel(null)}
+							/>
+						)}
 					</main>
 				</ErrorBoundary>
 				<SiteFooter />

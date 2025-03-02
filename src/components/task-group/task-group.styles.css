@@ -6,15 +6,37 @@
 }
 
 .task-group__header {
+  display: flex;
+  gap: 10px;
 	margin-bottom: 10px;
-	padding: 5px 10px;
+}
+
+.task-group__header-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  width: 100%;
+  max-width: calc(15% - 10px);
+  padding: 5px;
 	border-radius: var(--radius-main);
 	-webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	color: var(--color-white);
-	text-align: center;
+  font-size: 16px;
 	text-transform: uppercase;
+}
+
+.task-group__header-tile--main {
+  flex-grow: 1;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
+.task-group__header-tile--main .icon {
+  margin-right: 5px;
+  flex-shrink: 0;
 }
 
 .task-group__body {
@@ -22,19 +44,19 @@
 	overflow: auto;
 }
 
-.task-group--backlog .task-group__header {
+.task-group__header-tile--backlog {
 	background-color: var(--color-backlog);
 }
 
-.task-group--todo .task-group__header {
+.task-group__header-tile--todo {
 	background-color: var(--color-todo);
 }
 
-.task-group--inProgress .task-group__header {
+.task-group__header-tile--inProgress {
 	background-color: var(--color-inProgress);
 }
 
-.task-group--done .task-group__header {
+.task-group__header-tile--done {
 	background-color: var(--color-done);
 }
 

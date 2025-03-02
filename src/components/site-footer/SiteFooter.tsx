@@ -9,20 +9,19 @@ export const SiteFooter = () => {
 	const currentYear = now.getFullYear();
 	return (
 		<footer className='site-footer'>
+			<small className='site-footer__copyright'>
+				SLIMMIND &copy; {currentYear}
+			</small>
 
-				<div className='site-footer__controls'>
-					{/* <Search
+			<div className='site-footer__controls'>
+				{/* <Search
 						isActive={activePanel === 'search'}
 						togglePanel={() =>
 							handlePanel(activePanel === 'search' ? null : 'search')
 						}
 					/> */}
-					<AddTask />
-				</div>
-
-			<small className='site-footer__copyright'>
-				SLIMMIND &copy; {currentYear}
-			</small>
+				<AddTask />
+			</div>
 		</footer>
 	);
 };
