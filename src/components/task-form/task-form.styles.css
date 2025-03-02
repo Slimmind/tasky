@@ -1,0 +1,8 @@
+.panel--task-form {
+  background-color: var(--color-white-transparent);
+}
+
+.task-form__controls {
+  display: flex;
+  gap: 10px;
+}

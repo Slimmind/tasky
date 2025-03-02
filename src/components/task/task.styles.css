@@ -4,7 +4,6 @@
   backdrop-filter: var(--blur);
 	border: var(--border-width) solid var(--accent-color-transparent);
 	border-radius: var(--radius-main);
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
 }
 
@@ -14,19 +13,20 @@
 
 .task__header {
 	display: flex;
+  margin-bottom: 4px;
 }
 
 .task__header-controls {
+  display: flex;
+  gap: 10px;
 	flex-shrink: 0;
-}
-
-.task__header-controls .btn {
-	margin: 4px 4px 0 0;
+  padding: 4px 5px 0 0px;
 }
 
 .task__title {
 	flex-grow: 1;
-	padding: 5px 10px;
+	padding: 10px;
+  /* line-height: 38px; */
 }
 
 .task__description {

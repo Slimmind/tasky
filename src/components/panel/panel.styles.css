@@ -3,12 +3,12 @@
 	top: 80px;
 	left: 10px;
 	width: calc(100% - 20px);
-	height: calc(100% - 195px);
-	max-height: calc(100% - 195px);
+	height: calc(100% - 183px);
+	max-height: calc(100% - 183px);
 	padding: 6px;
 	backdrop-filter: var(--blur);
 	border: var(--border-width) solid var(--accent-color);
-	border-radius: 1rem;
+	border-radius: var(--radius-main);
 	opacity: 0;
 	transform-origin: bottom;
 	transform: translateY(20px);

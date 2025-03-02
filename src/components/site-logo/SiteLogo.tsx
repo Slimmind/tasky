@@ -1,5 +1,5 @@
-import "./site-logo.styles.css";
+import './site-logo.styles.css';
 
 export const SiteLogo = () => {
-  return <a className="site-logo" href="/"></a>;
+	return <a className='site-logo' aria-label='Tasky' href='/'></a>;
 };

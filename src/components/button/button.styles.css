@@ -3,12 +3,17 @@
 	padding: 10px 20px;
 	background-color: var(--accent-color-transparent);
   border: 0;
-	border-radius: var(--radius-main);
+	border-radius: var(--radius-large);
 	box-shadow: var(--shadow);
 	color: var(--color-white);
 	cursor: pointer;
+  font-family: "Nunito", sans-serif;
 	font-size: 1rem;
   outline: none;
+}
+
+.btn--wide.btn--cancel {
+  background-color: var(--color-gray);
 }
 
 .btn--icon {
@@ -94,7 +99,8 @@
   width: 100%;
 	max-width: 480px;
 	margin-inline: auto;
-	backdrop-filter: var(--blur);
+  background-color: var(--accent-color);
+  font-weight: 700;
 	text-align: center;
 }
 
@@ -147,8 +153,8 @@
 }
 
 .btn--color {
-  width: 28px;
-  height: 28px;
+  width: 35px;
+  height: 35px;
 	padding: 0;
   border-radius: 50%;
 }
@@ -167,6 +173,10 @@
 
 .btn--color.btn--done {
 	background-color: var(--color-done);
+}
+
+.btn--color.btn--delete {
+	background-color: var(--color-red);
 }
 
 .btn--loading {
