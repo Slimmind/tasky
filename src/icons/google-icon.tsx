@@ -4,7 +4,7 @@ const GoogleIcon = () => (
 		width='24'
 		height='24'
 		xmlns='http://www.w3.org/2000/svg'
-    className="icon"
+		className='icon'
 	>
 		<g clipRule='evenodd'>
 			<path fill='none' d='M0 0h128v128H0z' />

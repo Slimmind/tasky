@@ -144,19 +144,19 @@
   border-radius: 50%;
 }
 
-.btn--color {
-  overflow: visible;
-}
-
 .btn--color.active {
   border: 0;
 }
 
 .btn--color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 35px;
   height: 35px;
 	padding: 0;
   border-radius: 50%;
+  overflow: visible;
 }
 
 .btn--color.btn--backlog {

@@ -7,6 +7,10 @@
 	overflow: hidden;
 }
 
+.task + .ghost-task {
+  margin-top: 10px;
+}
+
 .task:last-of-type {
 	margin-bottom: 0;
 }
@@ -26,7 +30,6 @@
 .task__title {
 	flex-grow: 1;
 	padding: 10px;
-  /* line-height: 38px; */
 }
 
 .task__description {

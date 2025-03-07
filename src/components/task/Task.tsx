@@ -13,6 +13,11 @@ import './task.styles.css';
 const Subtask = lazy(() => import('../subtask'));
 const Estimation = lazy(() => import('../estimation'));
 const Button = lazy(() => import('../button'));
+const RemoveIcon = lazy(() => import('../../icons/remove-icon'));
+const DoneIcon = lazy(() => import('../../icons/done-icon'));
+const InProgressIcon = lazy(() => import('../../icons/in-progress-icon'));
+const BacklogIcon = lazy(() => import('../../icons/backlog-icon'));
+const TodoIcon = lazy(() => import('../../icons/todo-icon'));
 
 type TaskProps = {
 	data: TaskType;
@@ -25,20 +30,59 @@ const getSwitchersConfig = (
 ) => {
 	return {
 		[TaskVariants.BACKLOG]: [
-			{ mod: 'color todo', handler: () => changeTaskType('todo') },
+			{
+				mod: 'color todo',
+				anchor: 'todo',
+				handler: () => changeTaskType('todo'),
+				icon: <TodoIcon />,
+			},
 		],
 		[TaskVariants.TODO]: [
-			{ mod: 'color backlog', handler: () => changeTaskType('backlog') },
-			{ mod: 'color inProgress', handler: () => changeTaskType('inProgress') },
+			{
+				mod: 'color backlog',
+				anchor: 'backlog',
+				handler: () => changeTaskType('backlog'),
+				icon: <BacklogIcon />,
+			},
+			{
+				mod: 'color inProgress',
+				anchor: 'inProgress',
+				handler: () => changeTaskType('inProgress'),
+				icon: <InProgressIcon />,
+			},
 		],
 		[TaskVariants.IN_PROGRESS]: [
-			{ mod: 'color todo', handler: () => changeTaskType('todo') },
-			{ mod: 'color done', handler: () => changeTaskType('done') },
+			{
+				mod: 'color todo',
+				anchor: 'todo',
+				handler: () => changeTaskType('todo'),
+				icon: <TodoIcon />,
+			},
+			{
+				mod: 'color done',
+				anchor: 'done',
+				handler: () => changeTaskType('done'),
+				icon: <DoneIcon />,
+			},
 		],
 		[TaskVariants.DONE]: [
-			{ mod: 'color inProgress', handler: () => changeTaskType('inProgress') },
-			{ mod: 'color delete', handler: removeTask },
-			{ mod: 'color backlog', handler: () => changeTaskType('backlog') },
+			{
+				mod: 'color inProgress',
+				anchor: 'inProgress',
+				handler: () => changeTaskType('inProgress'),
+				icon: <InProgressIcon />,
+			},
+			{
+				mod: 'color delete',
+				handler: removeTask,
+				icon: <RemoveIcon />,
+			},
+			{
+				mod: 'color backlog',
+				anchor: 'backlog',
+				handler: () => changeTaskType('backlog'),
+				icon: <BacklogIcon />,
+			},
 		],
 	}[taskType];
 };
@@ -53,9 +97,12 @@ const switchTaskVariants = (
 		<Button
 			key={index}
 			mod={config.mod}
+			href={`#${config.anchor}`}
 			onClick={config.handler}
 			aria-label={`switch task type to ${taskType}`}
-		/>
+		>
+			{config.icon}
+		</Button>
 	));
 };
 

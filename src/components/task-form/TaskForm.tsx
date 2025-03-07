@@ -93,6 +93,7 @@ export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
 		(event: FormEvent) => {
 			event.preventDefault();
 			const newTask = buildTask();
+			console.log('TASK: ', newTask);
 
 			if (taskId) {
 				changeTask(taskId, newTask);
@@ -118,6 +119,7 @@ export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
 	const buildTask = useCallback(
 		(): TaskType => ({
 			id: nanoid(),
+			creationDate: Date.now(),
 			type: currentTask ? currentTask.type : 'backlog',
 			title,
 			description,

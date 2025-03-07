@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 50px;
+  min-width: 60px;
   width: 100%;
   max-width: calc(15% - 10px);
   padding: 5px;
@@ -42,6 +42,10 @@
 .task-group__body {
 	max-height: calc(100dvh - 235px);
 	overflow: auto;
+}
+
+.task-group__body:not(:empty) + .ghost-task {
+  margin-top: 10px;
 }
 
 .task-group__header-tile--backlog {

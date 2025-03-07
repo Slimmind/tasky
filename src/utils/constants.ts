@@ -46,6 +46,7 @@ export type TaskVariantType = 'backlog' | 'todo' | 'inProgress' | 'done';
 
 export type TaskType = {
 	id: string;
+	creationDate: number;
 	type: TaskVariantType;
 	title: string;
 	description?: string;
@@ -67,10 +68,10 @@ export const taskGroupList = [
 ];
 
 export enum PanelViews {
-  ADD = 'add',
-  AUTH = 'auth',
-  EDIT = 'edit',
-  SEARCH = 'search',
+	ADD = 'add',
+	AUTH = 'auth',
+	EDIT = 'edit',
+	SEARCH = 'search',
 }
 
 export type PanelTypes = 'search' | 'auth' | 'add' | 'edit' | null;
