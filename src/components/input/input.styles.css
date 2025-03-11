@@ -15,14 +15,14 @@
 	align-items: center;
 	min-height: 40px;
 	padding-left: 40px;
-	background-color: var(--accent-color);
+	background-color: var(--color-main);
 	border-radius: var(--radius-main);
 	cursor: pointer;
 }
 
 .input--checkbox label {
 	background-color: transparent;
-	color: var(--accent-color);
+	color: var(--color-main);
 }
 
 .input--radio label::before,
@@ -52,14 +52,14 @@
 	left: 8px;
 	width: 24px;
 	height: 24px;
-	background-color: var(--accent-color);
+	background-color: var(--color-main);
 	opacity: 0;
 	transform: scale(.8);
 	transition: opacity .3s, transform .3s ease-in-out;
 }
 
 .input--checkbox label::before {
-	border: var(--border-width) solid var(--accent-color);
+	border: var(--border-width) solid var(--color-main);
 	border-radius: var(--radius-small);
 }
 
@@ -68,8 +68,8 @@
 	left: 14px;
 	width: 12px;
 	height: 20px;
-	border-right: var(--border-width) solid var(--accent-color);
-	border-bottom: var(--border-width) solid var(--accent-color);
+	border-right: var(--border-width) solid var(--color-main);
+	border-bottom: var(--border-width) solid var(--color-main);
 	opacity: 0;
 	transform: scale(.8) rotate(45deg);
 	transition: opacity .3s, transform .3s ease-in-out;
@@ -135,9 +135,9 @@ textarea {
   width: 100%;
   padding: 10px;
   background-color: var(--color-white);
-  border: var(--border-width) solid var(--accent-color);
+  border: var(--border-width) solid var(--color-main);
   border-radius: var(--radius-small);
-  color: var(--accent-color);
+  color: var(--color-main);
   font-size: 18px;
   outline: none;
   resize: none;
@@ -145,7 +145,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--accent-color-transparent);
+  color: var(--color-main-transparent);
   font-size: 16px;
   font-family: monospace;
 }
@@ -154,7 +154,7 @@ label {
   display: inline-block;
   vertical-align: top;
   padding: 4px 14px;
-  background-color: var(--accent-color);
+  background-color: var(--color-main);
   border-radius: var(--radius-small) var(--radius-small) 0 0;
   color: var(--color-white);
   font-size: 14px;
@@ -177,7 +177,7 @@ label + .input__wrap textarea {
   right: 0;
   width: 30px;
   height: 100%;
-  background-color: var(--accent-color);
+  background-color: var(--color-main);
   border-radius: 0 var(--radius-small) var(--radius-small) 0;
   box-shadow: none;
 }
@@ -202,6 +202,6 @@ label + .input__wrap textarea {
 }
 
 .input__description {
-  background-color: var(--accent-color);
+  background-color: var(--color-main);
 	font-style: italic;
 }

@@ -7,7 +7,7 @@
 	max-height: calc(100% - 183px);
 	padding: 6px;
 	backdrop-filter: var(--blur);
-	border: var(--border-width) solid var(--accent-color);
+	border: var(--border-width) solid var(--color-main);
 	border-radius: var(--radius-main);
 	opacity: 0;
 	transform-origin: bottom;
@@ -18,7 +18,7 @@
 }
 
 .panel--filled {
-	background-color: var(--accent-color-transparent);
+	background-color: var(--color-main-transparent);
 	border-color: transparent;
 	color: var(--color-white);
 }
@@ -37,6 +37,6 @@
 
 .panel__section{
 	padding: 10px;
-	background-color: var(--accent-color-transparent);
+	background-color: var(--color-main-transparent);
 	border-radius: .75rem;
 }
