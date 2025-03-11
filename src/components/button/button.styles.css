@@ -1,7 +1,7 @@
 .btn {
   position: relative;
 	padding: 10px 20px;
-	background-color: var(--accent-color-transparent);
+	background-color: var(--color-main-transparent);
   border: 0;
 	border-radius: var(--radius-large);
 	box-shadow: var(--shadow);
@@ -13,7 +13,7 @@
 }
 
 .btn--wide.btn--cancel {
-  background-color: var(--color-gray);
+  background-color: var(--color-grey);
 }
 
 .btn--icon {
@@ -28,7 +28,7 @@
 }
 
 .btn--icon.btn--filled {
-	background-color: var(--accent-color);
+	background-color: var(--color-main);
 }
 
 .btn::before,
@@ -42,7 +42,7 @@
   right: 2px;
   width: 28px;
   height: 28px;
-  border: var(--border-width) solid var(--accent-color-transparent);
+  border: var(--border-width) solid var(--color-main-transparent);
   border-radius: 50%;
 }
 
@@ -51,7 +51,7 @@
   left: 4px;
   width: 14px;
   height: 4px;
-  background-color: var(--accent-color-transparent);
+  background-color: var(--color-main-transparent);
   border-radius: 2px 0 0 2px;
   transform: rotate(-45deg);
 }
@@ -61,11 +61,11 @@
   left: 5px;
   width: 30px;
   height: 4px;
-  background-color: var(--accent-color-transparent);
+  background-color: var(--color-main-transparent);
   border-radius: 2px;
   box-shadow:
-    0 12px 0 0 var(--accent-color-transparent),
-    0 24px 0 0 var(--accent-color-transparent);
+    0 12px 0 0 var(--color-main-transparent),
+    0 24px 0 0 var(--color-main-transparent);
 }
 
 .btn--add::before,
@@ -74,7 +74,7 @@
   left: calc(50% - 18px);
   width: 36px;
   height: 4px;
-  background-color: var(--accent-color-transparent);
+  background-color: var(--color-main-transparent);
   border-radius: 2px;
 }
 
@@ -99,7 +99,7 @@
   width: 100%;
 	max-width: 480px;
 	margin-inline: auto;
-  background-color: var(--accent-color);
+  background-color: var(--color-main);
   font-weight: 700;
 	text-align: center;
 }
@@ -112,7 +112,7 @@
 
 .btn--secondary {
 	background-color: var(--color-white);
-	color: var(--accent-color);
+	color: var(--color-main);
 	opacity: 0.7;
 	transition: opacity .3s;
 }
@@ -123,7 +123,7 @@
 }
 
 .btn--auth {
-  border: var(--border-width) solid var(--accent-color-transparent);
+  border: var(--border-width) solid var(--color-main-transparent);
 }
 
 .btn--auth::before {
@@ -131,7 +131,7 @@
   left: calc(50% - 10px);
   width: 20px;
   height: 20px;
-  border: var(--border-width) solid var(--accent-color-transparent);
+  border: var(--border-width) solid var(--color-main-transparent);
   border-radius: 50%;
 }
 
@@ -140,7 +140,7 @@
   left: calc(50% - 20px);
   width: 40px;
   height: 40px;
-  border: var(--border-width) solid var(--accent-color-transparent);
+  border: var(--border-width) solid var(--color-main-transparent);
   border-radius: 50%;
 }
 
@@ -160,19 +160,19 @@
 }
 
 .btn--color.btn--backlog {
-	background-color: var(--color-backlog);
+	background-color: var(--color-grey-transparent);
 }
 
 .btn--color.btn--todo {
-	background-color: var(--color-todo);
+	background-color: var(--color-purple-transparent);
 }
 
 .btn--color.btn--inProgress {
-	background-color: var(--color-inProgress);
+	background-color: var(--color-green-transparent);
 }
 
 .btn--color.btn--done {
-	background-color: var(--color-done);
+	background-color: var(--color-blue-transparent);
 }
 
 .btn--color.btn--delete {

@@ -1,5 +1,5 @@
 .tabs__header {
-  background-color: var(--accent-color);
+  background-color: var(--color-main);
   border-bottom: 2px solid var(--color-white-transparent);
 }
 
@@ -20,7 +20,7 @@
 
 .tabs__header-item--active {
 	border: 0;
-	color: var(--accent-color);
+	color: var(--color-main);
 	background-color: var(--color-white-transparent);
 }
 

@@ -2,7 +2,7 @@
 	margin-bottom: 10px;
 	-webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
-	border: var(--border-width) solid var(--accent-color-transparent);
+	border: var(--border-width) solid var(--color-main-transparent);
 	border-radius: var(--radius-main);
 	overflow: hidden;
 }
@@ -44,64 +44,62 @@
 }
 
 .task__footer {
-	padding: 5px 10px 1px;
-	background-color: var(--accent-color-transparent);
-	color: var(--color-white);
+	padding: 5px 10px 8px;
 	font-size: 14px;
 }
 
 .task--backlog {
-	border-color: var(--color-backlog);
-	color: var(--color-backlog);
+	border-color: var(--color-grey-transparent);
+	color: var(--color-grey-transparent);
 }
 
-.task--backlog .task__footer {
-	background-color: var(--color-backlog);
+.task--backlog .task__estimation {
+	color: var(--color-grey-transparent);
 }
 
 .task--backlog .subtask::before,
 .task--backlog .subtask::after {
-	border-color: var(--color-backlog);
+	border-color: var(--color-grey-transparent);
 }
 
 .task--todo {
-	border-color: var(--color-todo);
-	color: var(--color-todo);
+	border-color: var(--color-purple-transparent);
+	color: var(--color-purple-transparent);
 }
 
-.task--todo .task__footer {
-	background-color: var(--color-todo);
+.task--todo .task__estimation {
+	color: var(--color-purple-transparent);
 }
 
 .task--todo .subtask::before,
 .task--todo .subtask::after {
-	border-color: var(--color-todo);
+	border-color: var(--color-purple-transparent);
 }
 
 .task--inProgress {
-	border-color: var(--color-inProgress);
-	color: var(--color-inProgress);
+	border-color: var(--color-green-transparent);
+	color: var(--color-green-transparent);
 }
 
-.task--inProgress .task__footer {
-	background-color: var(--color-inProgress);
+.task--inProgress .task__estimation {
+	color: var(--color-green-transparent);
 }
 
 .task--inProgress .subtask::before,
 .task--inProgress .subtask::after {
-	border-color: var(--color-inProgress);
+	border-color: var(--color-green-transparent);
 }
 
 .task--done {
-	border-color: var(--color-done);
-	color: var(--color-done);
+	border-color: var(--color-blue-transparent);
+	color: var(--color-blue-transparent);
 }
 
-.task--done .task__footer {
-	background-color: var(--color-done);
+.task--done .task__estimation {
+	color: var(--color-blue-transparent);
 }
 
 .task--done .subtask::before,
 .task--done .subtask::after {
-	border-color: var(--color-done);
+	border-color: var(--color-blue-transparent);
 }

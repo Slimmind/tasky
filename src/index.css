@@ -14,29 +14,41 @@
   font-optical-sizing: auto;
 
   --blur: blur(3px);
-  --shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  --shadow: 0 0 6px 0 rgba(var(--black-color-prop), 0.2);
 	--radius-main: 1rem;
 	--radius-small: .5rem;
 	--radius-large: 1.5rem;
 	--border-width: 4px;
-
+  --main-color-transparency: 0.7;
 
 	--main-color-prop: 0, 118, 110;
-  --color-white: #fff;
-	--color-white-transparent: rgba(255, 255, 255, var(--accent-color-transparency));
-  --color-black: black;
-  --color-red: rgb(200, 0, 100);
-  --accent-color-transparency: 0.7;
-  --accent-color: rgb(var(--main-color-prop));
-  --accent-color-transparent: rgba(
-    var(--main-color-prop),
-    var(--accent-color-transparency)
-  );
-	--color-backlog: rgba(100, 120, 150, var(--accent-color-transparency));
-	--color-todo: rgba(102, 51, 153, var(--accent-color-transparency));
-	--color-inProgress: rgba(0, 100, 0, var(--accent-color-transparency));
-	--color-done: rgba(0, 50, 150, var(--accent-color-transparency));
-  --color-gray-light: #647896;
+  --white-color-prop: 255,255,255;
+  --black-color-prop: 0,0,0;
+  --grey-color-prop: 100, 120, 150;
+  --purple-color-prop: 102, 51, 153;
+  --green-color-prop: 0, 100, 0;
+  --blue-color-prop: 0, 50, 150;
+  --red-color-prop: 200, 0, 100;
+
+  --color-main: rgb(var(--main-color-prop));
+  --color-white: rgb(var(--white-color-prop));
+  --color-black: rgb(var(--black-color-prop));
+  --color-red: rgb(var(--red-color-prop));
+  --color-black: rgb(var(--black-color-prop));
+  --color-grey: rgb(var(--grey-color-prop));
+  --color-purple: rgb(var(--purple-color-prop));
+  --color-green: rgb(var(--green-color-prop));
+  --color-blue: rgb(var(--blue-color-prop));
+
+  --color-main-transparent: rgba(var(--main-color-prop), var(--main-color-transparency));
+  --color-white-transparent: rgba(var(--white-color-prop), var(--main-color-transparency));
+  --color-black-transparent: rgba(var(--black-color-prop), var(--main-color-transparency));
+  --color-red-transparent: rgba(var(--red-color-prop), var(--main-color-transparency));
+  --color-black-transparent: rgba(var(--black-color-prop), var(--main-color-transparency));
+  --color-grey-transparent: rgba(var(--grey-color-prop), var(--main-color-transparency));
+  --color-purple-transparent: rgba(var(--purple-color-prop), var(--main-color-transparency));
+  --color-green-transparent: rgba(var(--green-color-prop), var(--main-color-transparency));
+  --color-blue-transparent: rgba(var(--blue-color-prop), var(--main-color-transparency));
 }
 
 #root {
@@ -51,7 +63,7 @@
     transparent 1px
   );
   background-size: 20px 20px;
-  color: var(--accent-color);
+  color: var(--color-main);
 	overflow: hidden;
 }
 

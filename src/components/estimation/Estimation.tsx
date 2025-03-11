@@ -9,7 +9,7 @@ export const Estimation = ({ data }: EstimationProps) => {
 	// const spentValue = Math.ceil((data.spentTime / data.estimationTime) * 100);
 	return (
 		<div className='estimation'>
-			<div className='estimation__value'>Estimation: {data.estimation}</div>
+			<strong className='estimation__value'>Estimation: {data.estimation}</strong>
 			{/* <div className='estimation__graph'>
 				<div
 					className='estimation__graph-spent'
