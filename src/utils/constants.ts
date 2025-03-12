@@ -11,6 +11,7 @@ export const TaskTemplate = {
 		spentTime: 0,
 		leftTime: 0,
 		overTime: 0,
+    run: false
 	},
 };
 
@@ -40,6 +41,7 @@ export type TaskTimeType = {
 	spentTime: number;
 	leftTime: number;
 	overTime: number;
+  run: boolean;
 };
 
 export type TaskVariantType = 'backlog' | 'todo' | 'inProgress' | 'done';

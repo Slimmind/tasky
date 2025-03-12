@@ -173,7 +173,7 @@ export const Task = ({ data }: TaskProps) => {
 				)}
 			</div>
 			<footer className='task__footer'>
-				<Estimation data={data.time} />
+				<Estimation task={data} />
 			</footer>
 		</li>
 	);

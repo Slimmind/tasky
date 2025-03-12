@@ -29,6 +29,7 @@
   --green-color-prop: 0, 100, 0;
   --blue-color-prop: 0, 50, 150;
   --red-color-prop: 200, 0, 100;
+  --yellow-color-prop: 250, 200, 0;
 
   --color-main: rgb(var(--main-color-prop));
   --color-white: rgb(var(--white-color-prop));
@@ -39,6 +40,7 @@
   --color-purple: rgb(var(--purple-color-prop));
   --color-green: rgb(var(--green-color-prop));
   --color-blue: rgb(var(--blue-color-prop));
+  --color-yellow: rgb(var(--yellow-color-prop));
 
   --color-main-transparent: rgba(var(--main-color-prop), var(--main-color-transparency));
   --color-white-transparent: rgba(var(--white-color-prop), var(--main-color-transparency));
@@ -49,6 +51,7 @@
   --color-purple-transparent: rgba(var(--purple-color-prop), var(--main-color-transparency));
   --color-green-transparent: rgba(var(--green-color-prop), var(--main-color-transparency));
   --color-blue-transparent: rgba(var(--blue-color-prop), var(--main-color-transparency));
+  --color-yellow-transparent: rgba(var(--yellow-color-prop), var(--main-color-transparency));
 }
 
 #root {

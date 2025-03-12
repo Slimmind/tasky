@@ -1,29 +1,55 @@
 .estimation {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  font-size: 14px;
 }
 
-.estimation__value {
-	min-width: fit-content;
-	margin-right: 10px;
+.estimation__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
-.estimation__graph {
-	position: relative;
-	display: flex;
-	flex-basis: 100%;
-	height: 4px;
-	border-radius: 2px;
-	background-color: var(--color-white);
-	overflow: hidden;
+.estimation__header button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
 }
 
-.estimation__graph-spent {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 4px;
-	border-radius: 2px;
-	background-color: green;
+.estimation__progress-bar {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.estimation__progress,
+.estimation__overtime {
+  position: absolute;
+  top: 0;
+  width: 0;
+  height: 100%;
+}
+
+.estimation__progress {
+  left: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.estimation__overtime {
+  right: 0;
+  border-radius: 0 5px 5px 0;
+  background-color: var(--color-yellow);
+}
+
+.estimation__progress-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.estimation__over {
+  color: var(--color-yellow);
 }
