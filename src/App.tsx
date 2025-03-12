@@ -7,7 +7,7 @@ const ErrorBoundary = lazy(() => import('./components/error-boundary'));
 const SiteHeader = lazy(() => import('./components/site-header'));
 const SiteFooter = lazy(() => import('./components/site-footer'));
 const Welcome = lazy(() => import('./components/welcome'));
-const Tasks = lazy(() => import('./components/tasks'));
+const Boards = lazy(() => import('./components/boards'));
 const TaskForm = lazy(() => import('./components/task-form'));
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
 				<ErrorBoundary>
 					<main>
 						<Welcome />
-						<Tasks />
+						<Boards />
 						{activePanel === 'edit' && activeTaskId && (
 							<TaskForm
 								taskId={activeTaskId}

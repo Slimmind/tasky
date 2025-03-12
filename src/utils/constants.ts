@@ -72,9 +72,10 @@ export enum PanelViews {
 	AUTH = 'auth',
 	EDIT = 'edit',
 	SEARCH = 'search',
+  BOARDS = 'boards',
 }
 
-export type PanelTypes = 'search' | 'auth' | 'add' | 'edit' | null;
+export type PanelTypes = 'search' | 'auth' | 'add' | 'edit' | 'boards' | null;
 
 export type UserType = {
 	displayName: string;

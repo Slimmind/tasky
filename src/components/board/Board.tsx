@@ -1,17 +1,17 @@
 import { lazy } from 'react';
 import { useTasks } from '../../context/task.context';
 import { taskGroupList } from '../../utils/constants';
-import './tasks.styles.css';
+import './board.styles.css';
 
 const TaskGroup = lazy(() => import('../task-group'));
 
-export const Tasks = () => {
+export const Board = () => {
 	const { tasks } = useTasks();
 
 	return (
 		tasks.length > 0 && (
-			<div className='tasks'>
-				<ul className='tasks__group-list'>
+			<div className='board'>
+				<ul className='board__group-list'>
 					{taskGroupList.map((group: string) => (
 						<TaskGroup
 							key={group}
