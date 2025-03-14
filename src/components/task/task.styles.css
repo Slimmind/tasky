@@ -1,9 +1,12 @@
 .task {
+  position: relative;
+  max-height: 1000px;
 	margin-bottom: 10px;
 	-webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
 	border: var(--border-width) solid var(--color-main-transparent);
 	border-radius: var(--radius-main);
+  transition: max-height .3s ease-in;
 	overflow: hidden;
 }
 
@@ -102,4 +105,8 @@
 .task--done .subtask::before,
 .task--done .subtask::after {
 	border-color: var(--color-blue-transparent);
+}
+
+.task--collapsed {
+  max-height: 50px;
 }

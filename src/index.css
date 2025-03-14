@@ -27,7 +27,7 @@
   --grey-color-prop: 100, 120, 150;
   --purple-color-prop: 102, 51, 153;
   --green-color-prop: 0, 100, 0;
-  --blue-color-prop: 0, 50, 150;
+  --blue-color-prop: 0, 70, 150;
   --red-color-prop: 200, 0, 100;
 
   --color-main: rgb(var(--main-color-prop));
