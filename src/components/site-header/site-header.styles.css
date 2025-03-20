@@ -17,3 +17,7 @@
   border-radius: 5px;
   transform: translateX(-50%);
 }
+
+.site-header .btn--user-name {
+  padding: 10px;
+}

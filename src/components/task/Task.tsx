@@ -104,7 +104,7 @@ export const Task = ({ data }: TaskProps) => {
 
   useEffect(() => {
     if(elementRef.current) {
-      setTitleHeight(elementRef.current.offsetHeight + 8);
+      setTitleHeight(elementRef.current.offsetHeight);
     }
   }, []);
 
@@ -155,7 +155,7 @@ export const Task = ({ data }: TaskProps) => {
   });
 
   return (
-    <li className={classes} id={data.id} style={{maxHeight: isCollapsed ? titleHeight : 1000}}>
+    <li className={classes} id={data.id} style={{maxHeight: isCollapsed ? titleHeight : 640}}>
       <header className='task__header'>
         <h4
           ref={elementRef}

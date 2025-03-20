@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react';
 import Preloader from './components/preloader';
-import './index.css';
 import { usePanel } from './context/panel.context';
+import { PanelViews } from './utils/constants';
+import './index.css';
 
 const ErrorBoundary = lazy(() => import('./components/error-boundary'));
 const SiteHeader = lazy(() => import('./components/site-header'));
@@ -9,6 +10,7 @@ const SiteFooter = lazy(() => import('./components/site-footer'));
 const Welcome = lazy(() => import('./components/welcome'));
 const Tasks = lazy(() => import('./components/tasks'));
 const TaskForm = lazy(() => import('./components/task-form'));
+const AuthForm = lazy(() => import('./components/auth-form'));
 
 function App() {
 	const { activePanel, activeTaskId, setActivePanel } = usePanel();
@@ -21,9 +23,15 @@ function App() {
 					<main>
 						<Welcome />
 						<Tasks />
-						{activePanel === 'edit' && activeTaskId && (
+						{activePanel === PanelViews.EDIT && activeTaskId && (
 							<TaskForm
 								taskId={activeTaskId}
+								isActive={true}
+								togglePanel={() => setActivePanel(null)}
+							/>
+						)}
+						{activePanel === PanelViews.AUTH && (
+							<AuthForm
 								isActive={true}
 								togglePanel={() => setActivePanel(null)}
 							/>

@@ -1,10 +1,10 @@
 .task {
   position: relative;
-  max-height: 1000px;
+  max-height: 640px;
 	margin-bottom: 10px;
 	-webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
-	border: var(--border-width) solid var(--color-main-transparent);
+	/* border: var(--border-width) solid var(--color-main-transparent); */
 	border-radius: var(--radius-main);
   transition: max-height .3s ease-in;
 	overflow: hidden;
@@ -20,7 +20,6 @@
 
 .task__header {
 	display: flex;
-  margin-bottom: 4px;
 }
 
 .task__header-controls {
@@ -52,61 +51,61 @@
 }
 
 .task--backlog {
-	border-color: var(--color-grey-transparent);
-	color: var(--color-grey-transparent);
+	background-color: var(--color-grey-transparent-weak);
+	color: var(--color-grey);
 }
 
 .task--backlog .task__estimation {
-	color: var(--color-grey-transparent);
+	color: var(--color-grey);
 }
 
 .task--backlog .subtask::before,
 .task--backlog .subtask::after {
-	border-color: var(--color-grey-transparent);
+	border-color: var(--color-grey);
 }
 
 .task--todo {
-	border-color: var(--color-purple-transparent);
-	color: var(--color-purple-transparent);
+	background-color: var(--color-purple-transparent-weak);
+	color: var(--color-purple);
 }
 
 .task--todo .task__estimation {
-	color: var(--color-purple-transparent);
+	color: var(--color-purple);
 }
 
 .task--todo .subtask::before,
 .task--todo .subtask::after {
-	border-color: var(--color-purple-transparent);
+	border-color: var(--color-purple);
 }
 
 .task--inProgress {
-	border-color: var(--color-green-transparent);
-	color: var(--color-green-transparent);
+	background-color: var(--color-green-transparent-weak);
+	color: var(--color-green);
 }
 
 .task--inProgress .task__estimation {
-	color: var(--color-green-transparent);
+	color: var(--color-green);
 }
 
 .task--inProgress .subtask::before,
 .task--inProgress .subtask::after {
-	border-color: var(--color-green-transparent);
+	border-color: var(--color-green);
 }
 
 .task--done {
-	border-color: var(--color-blue-transparent);
-	color: var(--color-blue-transparent);
+	background-color: var(--color-blue-transparent-weak);
+	color: var(--color-blue);
 }
 
 .task--done .task__estimation {
-	color: var(--color-blue-transparent);
+	color: var(--color-blue);
 }
 
 .task--done .subtask::before,
 .task--done .subtask::after {
-	border-color: var(--color-blue-transparent);
+	border-color: var(--color-blue);
 }
 
 .task--collapsed {
-  max-height: 50px;
+  max-height: 48px;
 }
