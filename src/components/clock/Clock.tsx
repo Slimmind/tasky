@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import './clock.styles.css';
 
+const formatTime = (date: Date): string => {
+	return date.toLocaleTimeString('ru-RU', { hour12: false });
+};
+
 export const Clock = () => {
-	const [time, setTime] = useState(() => {
-		const now = new Date();
-		return now.toLocaleTimeString('ru-RU', { hour12: false });
-	});
+	const [time, setTime] = useState(() => formatTime(new Date()));
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
-			setTime(new Date().toLocaleTimeString('ru-RU', { hour12: false }));
+			setTime(formatTime(new Date()));
 		}, 1000);
 
 		return () => clearInterval(intervalId);

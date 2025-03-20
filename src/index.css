@@ -13,13 +13,14 @@
   line-height: 1.2;
   font-optical-sizing: auto;
 
-  --blur: blur(3px);
+  --blur: blur(4px);
   --shadow: 0 0 6px 0 rgba(var(--black-color-prop), 0.2);
-	--radius-main: 1rem;
+	--radius-main: 1.1rem;
 	--radius-small: .5rem;
 	--radius-large: 1.5rem;
 	--border-width: 4px;
   --main-color-transparency: 0.7;
+  --main-color-weak-transparency: 0.2;
 
 	--main-color-prop: 0, 118, 110;
   --white-color-prop: 255,255,255;
@@ -49,6 +50,16 @@
   --color-purple-transparent: rgba(var(--purple-color-prop), var(--main-color-transparency));
   --color-green-transparent: rgba(var(--green-color-prop), var(--main-color-transparency));
   --color-blue-transparent: rgba(var(--blue-color-prop), var(--main-color-transparency));
+
+  --color-main-transparent-weak: rgba(var(--main-color-prop), var(--main-color-weak-transparency));
+  --color-white-transparent-weak: rgba(var(--white-color-prop), var(--main-color-weak-transparency));
+  --color-black-transparent-weak: rgba(var(--black-color-prop), var(--main-color-weak-transparency));
+  --color-red-transparent-weak: rgba(var(--red-color-prop), var(--main-color-weak-transparency));
+  --color-black-transparent-weak: rgba(var(--black-color-prop), var(--main-color-weak-transparency));
+  --color-grey-transparent-weak: rgba(var(--grey-color-prop), var(--main-color-weak-transparency));
+  --color-purple-transparent-weak: rgba(var(--purple-color-prop), var(--main-color-weak-transparency));
+  --color-green-transparent-weak: rgba(var(--green-color-prop), var(--main-color-weak-transparency));
+  --color-blue-transparent-weak: rgba(var(--blue-color-prop), var(--main-color-weak-transparency));
 }
 
 #root {

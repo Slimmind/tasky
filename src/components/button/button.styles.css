@@ -112,6 +112,7 @@
 
 .btn--secondary {
 	background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-main-transparent);
 	color: var(--color-main);
 	opacity: 0.7;
 	transition: opacity .3s;
@@ -182,4 +183,31 @@
 .btn--loading {
 	pointer-events: none;
 	opacity: .3;
+}
+
+.btn--user-name {
+  padding: 5px 10px;
+}
+
+.btn--boards::before,
+.btn--boards::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  height: 6px;
+  background-color: var(--color-main-transparent);
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.btn--boards::before {
+  top: 4px;
+  width: 20px;
+  box-shadow: 0 24px 0 0 var(--color-main-transparent);
+}
+
+.btn--boards::after {
+  top: 12px;
+  width: 30px;
+  box-shadow: 0 8px 0 0 var(--color-main-transparent);
 }

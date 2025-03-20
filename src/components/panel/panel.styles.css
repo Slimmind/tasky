@@ -6,6 +6,7 @@
 	height: calc(100% - 183px);
 	max-height: calc(100% - 183px);
 	padding: 6px;
+  background-color: var(--color-white-transparent-weak);
 	backdrop-filter: var(--blur);
 	border: var(--border-width) solid var(--color-main);
 	border-radius: var(--radius-main);
