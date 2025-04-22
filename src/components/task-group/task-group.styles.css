@@ -3,6 +3,16 @@
 	/* height: calc(100dvh - 200px); */
 	width: calc(100vw - 20px);
 	scroll-snap-align: start;
+	view-timeline-name: --task-group;
+	view-timeline-axis: inline;
+	animation: fadeIn 1s ease-in forwards;
+	animation-timeline: --task-group;
+	animation-range: entry 20% cover 50%;
+  filter: blur(10px);
+	opacity: 0;
+	transform: scale(.8);
+	animation-fill-mode: both;
+	transition: filter 1s ease-in 1s ease-in, transform 1s ease-in;
 }
 
 .task-group__header {
@@ -68,5 +78,18 @@
 	.task-group {
 		width: calc(25% - 7.5px);
 		gap: 10px;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+    filter: blur(10px);
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+    filter: blur(0);
+		opacity: 1;
+		transform: scale(1);
 	}
 }
