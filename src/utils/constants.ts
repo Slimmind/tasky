@@ -1,3 +1,5 @@
+export const mainProjectName = 'TASKY_SLIMMIND';
+
 export const TaskTemplate = {
 	id: '',
 	type: '',
@@ -46,6 +48,7 @@ export type TaskVariantType = 'backlog' | 'todo' | 'inProgress' | 'done';
 
 export type TaskType = {
 	id: string;
+	project: string;
 	creationDate: number;
 	type: TaskVariantType;
 	title: string;
@@ -83,4 +86,14 @@ export type UserType = {
 	createdAt: Date;
 	tasks: TaskType[];
 	time: TaskTimeType;
+};
+
+export type BoardType = {
+	id: string;
+	name: string;
+	title: string;
+	color: string;
+	subtitle?: string;
+	description?: string;
+	tasks: TaskType[];
 };

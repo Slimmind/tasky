@@ -3,57 +3,100 @@ import React, {
 	InputHTMLAttributes,
 	lazy,
 	PropsWithChildren,
+	SelectHTMLAttributes,
 	TextareaHTMLAttributes,
 } from 'react';
 import clsx from 'clsx';
 import './input.styles.css';
 
-const WarningIcon = lazy(() => import('../../icons/warning-icon'));
+type BaseInputProps = {
+    id: string;
+    label?: string;
+    description?: string;
+    errorMessage?: string;
+    containerClassName?: string;
+};
 
-type InputProps = {
-	id: string;
-	label?: string;
-	type?: string;
-	description?: string;
-	errorMessage?: string;
-} & InputHTMLAttributes<HTMLInputElement> &
-	TextareaHTMLAttributes<HTMLTextAreaElement> &
-	PropsWithChildren;
+const Textarea = lazy(() => import('./textarea'));
+const Select = lazy(() => import('./select'));
+const RadioButton = lazy(() => import('./radio-button'));
+const Checkbox = lazy(() => import('./checkbox'));
+const InputElement = lazy(() => import('./input-element'));
 
 export const Input = forwardRef<
-	HTMLInputElement | HTMLTextAreaElement,
-	InputProps
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+    BaseInputProps & InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement> & SelectHTMLAttributes<HTMLSelectElement> & PropsWithChildren
 >(({ id, label, type, children, description, errorMessage, ...props }, ref) => {
-	const InputElement = type === 'textarea' ? 'textarea' : 'input';
+    const classes = clsx(
+        'input',
+        `input--${type}`,
+        errorMessage && 'input--invalid',
+        description && 'input--with-description'
+    );
 
-	const isChecking = type === 'radio' || type === 'checkbox';
-	const classes = clsx(
-		'input',
-		`input--${type}`,
-		errorMessage && 'input--invalid',
-		description && 'input--with-description'
-	);
-
-	return (
-		<div className={classes}>
-			{!isChecking && label && <label htmlFor={id}>{label}</label>}
-			<div className='input__wrap'>
-				{React.createElement(InputElement, {
-					ref: ref as React.Ref<HTMLInputElement & HTMLTextAreaElement>,
-					type: type || 'text',
-					id,
-					...props,
-				})}
-				{isChecking && label && <label htmlFor={id}>{label}</label>}
-				{children}
-        {description && <p className='input__description'>{description}</p>}
-        {errorMessage && (
-          <p className='input__error-message'>
-            <WarningIcon />
-            {errorMessage}
-          </p>
-        )}
-			</div>
-		</div>
-	);
+    switch (type) {
+        case 'textarea':
+            return (
+                <Textarea
+                    ref={ref as React.ForwardedRef<HTMLTextAreaElement>}
+                    id={id}
+                    label={label}
+                    description={description}
+                    errorMessage={errorMessage}
+                    containerClassName={classes}
+                    {...props as TextareaHTMLAttributes<HTMLTextAreaElement>}
+                />
+            );
+        case 'select':
+            return (
+                <Select
+                    ref={ref as React.ForwardedRef<HTMLSelectElement>}
+                    id={id}
+                    label={label}
+                    description={description}
+                    errorMessage={errorMessage}
+                    containerClassName={classes}
+                    {...props as SelectHTMLAttributes<HTMLSelectElement>}
+                >
+                    {children}
+                </Select>
+            );
+        case 'radio':
+            return (
+                <RadioButton
+                    ref={ref as React.ForwardedRef<HTMLInputElement>}
+                    id={id}
+                    label={label}
+                    description={description}
+                    errorMessage={errorMessage}
+                    containerClassName={classes}
+                    {...props as InputHTMLAttributes<HTMLInputElement>}
+                />
+            );
+        case 'checkbox':
+            return (
+                <Checkbox
+                    ref={ref as React.ForwardedRef<HTMLInputElement>}
+                    id={id}
+                    label={label}
+                    description={description}
+                    errorMessage={errorMessage}
+                    containerClassName={classes}
+                    {...props as InputHTMLAttributes<HTMLInputElement>}
+                />
+            );
+        default:
+            return (
+                <InputElement
+                    ref={ref as React.ForwardedRef<HTMLInputElement>}
+                    id={id}
+                    label={label}
+                    type={type}
+                    description={description}
+                    errorMessage={errorMessage}
+                    containerClassName={classes}
+                    {...props as InputHTMLAttributes<HTMLInputElement>}
+                />
+            );
+    }
 });

@@ -1,16 +1,16 @@
 import { lazy } from 'react';
+import { useBoards } from '../../context/boards.context';
+import './boards.styles.css';
 
-const Panel = lazy(() => import('../panel'));
+const Board = lazy(() => import('../board'));
 
 export const Boards = () => {
+	const { boards } = useBoards();
 	return (
-		<Panel filled={true} isActive={true} title='Проекты' mod='boards'>
-			<p>
-				<em>
-					Совсем скоро здесь появятся проекты и задания можно будет разделять
-					между ними, чтобы у каждого проекта был свой список заданий :)
-				</em>
-			</p>
-		</Panel>
+		<ul className='boards'>
+			{boards.map((board) => (
+				<Board data={board} />
+			))}
+		</ul>
 	);
 };

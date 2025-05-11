@@ -40,7 +40,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
 		}
 	}, [tasks]);
 
-	const addTask = useCallback((task: Omit<TaskType, 'id'>) => {
+	const addTask = useCallback((board: string, task: Omit<TaskType, 'id'>) => {
 		const newTask: TaskType = { id: nanoid(), ...task };
 		setTasks((prev) => [...prev, newTask]);
 	}, []);

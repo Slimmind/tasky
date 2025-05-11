@@ -8,7 +8,7 @@ import { useBoards } from './context/boards.context';
 const ErrorBoundary = lazy(() => import('./components/error-boundary'));
 const SiteHeader = lazy(() => import('./components/site-header'));
 const SiteFooter = lazy(() => import('./components/site-footer'));
-const Welcome = lazy(() => import('./components/welcome'));
+// const Welcome = lazy(() => import('./components/welcome'));
 const Tasks = lazy(() => import('./components/tasks'));
 const TaskForm = lazy(() => import('./components/task-form'));
 const AuthForm = lazy(() => import('./components/auth-form'));
@@ -24,7 +24,7 @@ function App() {
 				<SiteHeader />
 				<ErrorBoundary>
 					<main>
-						<Welcome />
+						{/* <Welcome /> */}
 						{boardsShown ? <Boards /> : <Tasks />}
 						{activePanel === PanelViews.EDIT && activeTaskId && (
 							<TaskForm

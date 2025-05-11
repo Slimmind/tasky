@@ -119,6 +119,7 @@ export const TaskForm = ({ taskId, isActive, togglePanel }: TaskFormProps) => {
 	const buildTask = useCallback(
 		(): TaskType => ({
 			id: nanoid(),
+			project: '',
 			creationDate: Date.now(),
 			type: currentTask ? currentTask.type : 'backlog',
 			title,
