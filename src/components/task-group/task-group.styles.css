@@ -3,7 +3,7 @@
 	/* height: calc(100dvh - 200px); */
 	width: calc(100vw - 20px);
 	scroll-snap-align: start;
-	view-timeline-name: --task-group;
+	/* view-timeline-name: --task-group;
 	view-timeline-axis: inline;
 	animation: fadeIn 1s ease-in forwards;
 	animation-timeline: --task-group;
@@ -12,7 +12,7 @@
 	opacity: 0;
 	transform: scale(.8);
 	animation-fill-mode: both;
-	transition: filter 1s ease-in 1s ease-in, transform 1s ease-in;
+	transition: filter 1s ease-in 1s ease-in, transform 1s ease-in; */
 }
 
 .task-group__header {
@@ -25,9 +25,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 60px;
-  width: 100%;
-  max-width: calc(15% - 10px);
+  width: 40px;
+  /* width: 100%; */
+  /* max-width: calc(15% - 10px); */
   padding: 5px;
 	border-radius: var(--radius-main);
 	-webkit-backdrop-filter: var(--blur);

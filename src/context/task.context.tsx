@@ -14,7 +14,7 @@ type TaskContextType = {
 	addTask: (task: Omit<TaskType, 'id'>) => void;
 	removeTask: (id: string) => void;
 	changeTask: (id: string, task: TaskType) => void;
-	categoriesWithTasks: string[]; // Новое свойство
+	categoriesWithTasks: string[];
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);

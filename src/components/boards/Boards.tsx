@@ -1,16 +1,33 @@
-import { lazy } from 'react';
-
-const Panel = lazy(() => import('../panel'));
+import { useEffect } from 'react';
+import { nanoid } from 'nanoid';
+import { useBoards } from '../../context/boards.context';
+import { useTasks } from '../../context/task.context';
+import { Board } from '../board/Board';
+import './boards.styles.css';
 
 export const Boards = () => {
+	const { boards, addBoard } = useBoards();
+	const { tasks } = useTasks();
+
+	useEffect(() => {
+		if (boards.length === 0) {
+			const firstBoard = {
+				id: nanoid(),
+				name: 'first-board',
+				title: 'Первый проект',
+				color: '#00766e',
+				tasks: tasks,
+			};
+
+			addBoard(firstBoard);
+		}
+	}, []);
+
 	return (
-		<Panel filled={true} isActive={true} title='Проекты' mod='boards'>
-			<p>
-				<em>
-					Совсем скоро здесь появятся проекты и задания можно будет разделять
-					между ними, чтобы у каждого проекта был свой список заданий :)
-				</em>
-			</p>
-		</Panel>
+		<ul className='boards'>
+			{boards.map((board) => (
+				<Board key={board.id} data={board} />
+			))}
+		</ul>
 	);
 };

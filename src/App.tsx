@@ -2,8 +2,8 @@ import { lazy, Suspense } from 'react';
 import Preloader from './components/preloader';
 import { usePanel } from './context/panel.context';
 import { PanelViews } from './utils/constants';
-import './index.css';
 import { useBoards } from './context/boards.context';
+import './index.css';
 
 const ErrorBoundary = lazy(() => import('./components/error-boundary'));
 const SiteHeader = lazy(() => import('./components/site-header'));

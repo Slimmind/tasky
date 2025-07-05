@@ -84,3 +84,12 @@ export type UserType = {
 	tasks: TaskType[];
 	time: TaskTimeType;
 };
+
+export type BoardType = {
+  id: string;
+  name: string;
+  title: string;
+  description?: string;
+  color: string;
+  tasks: TaskType[];
+}
