@@ -86,10 +86,9 @@ export type UserType = {
 };
 
 export type BoardType = {
-  id: string;
-  name: string;
-  title: string;
-  description?: string;
-  color: string;
-  tasks: TaskType[];
-}
+	id: string;
+	title: string;
+	description?: string;
+	color: string;
+	tasks: TaskType[];
+};
