@@ -1,5 +1,36 @@
 .board {
-  padding: 10px;
-  background-color: #efefef;
+  backdrop-filter: var(--blur);
+  background-color: var(--color-grey-transparent-weak);
+  border: 1px solid var(--color-grey-transparent-weak);
   border-radius: var(--radius-main);
+}
+
+.board__header > a {
+  display: block;
+  padding: 10px;
+}
+
+.board__body > a {
+  display: block;
+  padding: 0 10px 10px;
+}
+
+.board__header {
+  display: flex;
+  font-size: 16px;
+}
+
+.board__header-title {
+  flex-grow: 1;
+}
+
+.board__header-controls {
+  display: flex;
+  gap: 10px;
+	flex-shrink: 0;
+  padding: 4px 5px 0 0px;
+}
+
+.board__body {
+  font-size: 14px;
 }

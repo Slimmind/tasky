@@ -12,17 +12,14 @@ import { nanoid } from 'nanoid';
 
 type BoardsContextType = {
 	boards: BoardType[];
-	boardsShown: boolean;
 	addBoard: (board: Omit<BoardType, 'id'>) => void;
 	removeBoard: (id: string) => void;
 	changeBoard: (id: string, board: BoardType) => void;
-	setBoardsShown: () => void;
 };
 
 const BoardsContext = createContext<BoardsContextType | undefined>(undefined);
 
 export const BoardsProvider = ({ children }: { children: ReactNode }) => {
-	const [boardsShown, setBoardsShown] = useState<boolean>(false);
 	const [boards, setBoards] = useState<BoardType[]>(() => {
 		try {
 			const savedBoards = localStorage.getItem('boards');
@@ -56,27 +53,14 @@ export const BoardsProvider = ({ children }: { children: ReactNode }) => {
 		);
 	}, []);
 
-	const handleSetShownBoards = useCallback((): void => {
-		setBoardsShown(!boardsShown);
-	}, [boardsShown]);
-
 	const value = useMemo(
 		() => ({
 			boards,
-			boardsShown,
 			addBoard,
 			removeBoard,
 			changeBoard,
-			setBoardsShown: handleSetShownBoards,
 		}),
-		[
-			addBoard,
-			boards,
-			boardsShown,
-			changeBoard,
-			handleSetShownBoards,
-			removeBoard,
-		]
+		[addBoard, boards, changeBoard, removeBoard]
 	);
 
 	return (

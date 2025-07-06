@@ -1,6 +1,5 @@
 import { lazy, useMemo } from 'react';
 import { TaskType, TaskVariants } from '../../utils/constants';
-import { useTasks } from '../../context/task.context';
 import './task-group.styles.css';
 
 const Task = lazy(() => import('../task'));
@@ -8,12 +7,21 @@ const GhostTask = lazy(() => import('../ghost-task'));
 const CategoryIcon = lazy(() => import('../category-icon'));
 
 type TaskGroupProps = {
+	boardId: string;
 	group: string;
 	tasks: TaskType[];
 };
 
-export const TaskGroup = ({ group, tasks }: TaskGroupProps) => {
-	const { categoriesWithTasks } = useTasks();
+export const TaskGroup = ({ boardId, group, tasks }: TaskGroupProps) => {
+	const categoriesWithTasks = useMemo(() => {
+		const categories = new Set<string>();
+		tasks.forEach((task) => {
+			if (task.type) {
+				categories.add(task.type);
+			}
+		});
+		return Array.from(categories);
+	}, [tasks]);
 
 	const groupedTasks = useMemo(
 		() => tasks.filter((task) => task.type === group),
@@ -52,7 +60,7 @@ export const TaskGroup = ({ group, tasks }: TaskGroupProps) => {
 				{groupedTasks.map((task) => (
 					<Task key={task.id} data={task} />
 				))}
-				{group === TaskVariants.BACKLOG && <GhostTask />}
+				{group === TaskVariants.BACKLOG && <GhostTask boardId={boardId} />}
 			</ul>
 		</li>
 	);

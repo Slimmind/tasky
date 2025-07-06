@@ -1,15 +1,20 @@
-import { lazy } from 'react';
+import { Link, useParams, useRouterState } from '@tanstack/react-router';
 import './site-footer.styles.css';
-import { useBoards } from '../../context/boards.context';
-
-const AddTask = lazy(() => import('../add-task'));
-const Button = lazy(() => import('../button'));
-// const Search = lazy(() => import('../search'));
+import clsx from 'clsx';
 
 export const SiteFooter = () => {
-	const { setBoardsShown } = useBoards();
 	const now = new Date();
 	const currentYear = now.getFullYear();
+	const location = useRouterState().location;
+	const isBoardOpen = location.pathname.includes('/boards');
+	const isFormOpen = location.pathname.includes('/add');
+	const { boardId } = useParams({ strict: false });
+
+	const classes = clsx(
+		'btn btn--icon btn--add',
+		isFormOpen ? 'btn--active' : ''
+	);
+
 	return (
 		<footer className='site-footer'>
 			<small className='site-footer__copyright'>
@@ -17,18 +22,12 @@ export const SiteFooter = () => {
 			</small>
 
 			<div className='site-footer__controls'>
-				{/* <Search
-						isActive={activePanel === 'search'}
-						togglePanel={() =>
-							handlePanel(activePanel === 'search' ? null : 'search')
-						}
-					/> */}
-				<Button
-					mod='icon boards'
-					aria-label='go to boards'
-					onClick={setBoardsShown}
+				<Link
+					to={isBoardOpen ? '/tasks/add' : '/boards/add'}
+					search={boardId ? { boardId: boardId } : ''}
+					className={classes}
+					aria-label='toggle add task form'
 				/>
-				<AddTask />
 			</div>
 		</footer>
 	);
