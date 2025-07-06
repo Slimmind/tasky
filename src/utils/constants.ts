@@ -19,7 +19,7 @@ export const TaskVariants = {
 	TODO: 'todo',
 	IN_PROGRESS: 'inProgress',
 	DONE: 'done',
-};
+} as const;
 
 export type SubtaskType = {
 	id: string;
@@ -45,6 +45,7 @@ export type TaskTimeType = {
 export type TaskVariantType = 'backlog' | 'todo' | 'inProgress' | 'done';
 
 export type TaskType = {
+	boardId: string;
 	id: string;
 	creationDate: number;
 	type: TaskVariantType;
@@ -86,10 +87,9 @@ export type UserType = {
 };
 
 export type BoardType = {
-  id: string;
-  name: string;
-  title: string;
-  description?: string;
-  color: string;
-  tasks: TaskType[];
-}
+	id: string;
+	title: string;
+	description?: string;
+	color: string;
+	tasks: TaskType[];
+};

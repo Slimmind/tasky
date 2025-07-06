@@ -1,21 +1,28 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { TaskProvider } from './context/task.context.tsx';
-import { PanelProvider } from './context/panel.context.tsx';
+import ReactDOM from 'react-dom/client';
 import { AuthProvider } from './context/auth.context.tsx';
-import App from './App.tsx';
 import { BoardsProvider } from './context/boards.context.tsx';
+import { routeTree } from './routeTree.gen';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 
-createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<AuthProvider>
-			<BoardsProvider>
-				<TaskProvider>
-					<PanelProvider>
-						<App />
-					</PanelProvider>
-				</TaskProvider>
-			</BoardsProvider>
-		</AuthProvider>
-	</StrictMode>
-);
+const router = createRouter({ routeTree });
+
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: typeof router;
+	}
+}
+
+const rootElement = document.getElementById('root')!;
+if (!rootElement.innerHTML) {
+	const root = ReactDOM.createRoot(rootElement);
+	root.render(
+		<StrictMode>
+			<AuthProvider>
+				<BoardsProvider>
+					<RouterProvider router={router}></RouterProvider>
+				</BoardsProvider>
+			</AuthProvider>
+		</StrictMode>
+	);
+}

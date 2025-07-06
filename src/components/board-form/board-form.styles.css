@@ -1,12 +1,12 @@
-.task-form {
+.board-form {
   padding: 10px;
 }
 
-.task-form__title {
+.board-form__title {
   margin-bottom: 10px;
 }
 
-.task-form__controls {
+.board-form__controls {
   display: flex;
   gap: 10px;
 }

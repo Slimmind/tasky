@@ -105,6 +105,11 @@ ul {
 	margin-bottom: 20px;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 @keyframes topDown {
   0% {
     transform: translateY(0);

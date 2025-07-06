@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { useBoards } from '../../context/boards.context';
-import { useTasks } from '../../context/task.context';
+import { getRandomRGB } from '../../utils/get-random-rgb';
 import { Board } from '../board/Board';
 import './boards.styles.css';
 
 export const Boards = () => {
 	const { boards, addBoard } = useBoards();
-	const { tasks } = useTasks();
 
 	useEffect(() => {
 		if (boards.length === 0) {
@@ -15,8 +14,10 @@ export const Boards = () => {
 				id: nanoid(),
 				name: 'first-board',
 				title: 'Первый проект',
-				color: '#00766e',
-				tasks: tasks,
+				description:
+					'Заголовок и описание проекта можно будет отредактировать позже',
+				color: getRandomRGB(),
+				tasks: [],
 			};
 
 			addBoard(firstBoard);

@@ -1,16 +1,10 @@
 import { lazy, FormEvent, useState } from 'react';
 import { useAuth } from '../../context/auth.context';
-const Panel = lazy(() => import('../panel'));
 const Button = lazy(() => import('../button'));
 const Input = lazy(() => import('../input'));
 import './auth-form.styles.css';
 
-type AuthFormProps = {
-	isActive: boolean;
-	togglePanel: () => void;
-};
-
-export const AuthForm = ({ isActive, togglePanel }: AuthFormProps) => {
+export const AuthForm = () => {
 	const { currentUser, signUp, logIn, logOut } = useAuth();
 	const [registrationMode, setRegistrationMode] = useState<boolean>(true);
 
@@ -32,25 +26,13 @@ export const AuthForm = ({ isActive, togglePanel }: AuthFormProps) => {
 			} else {
 				await logIn(email, password);
 			}
-			togglePanel();
 		} catch (error) {
 			console.error('Error:', error);
 		}
 	};
 
 	return (
-		<Panel
-			mod='auth'
-			filled={false}
-			isActive={isActive}
-			title={
-				currentUser
-					? 'Вы уже авторизованы'
-					: registrationMode
-					? 'Регистрация'
-					: 'Вход'
-			}
-		>
+		<div className='auth-form'>
 			{currentUser ? (
 				<Button mod='wide' onClick={() => logOut()}>
 					Выйти
@@ -90,14 +72,14 @@ export const AuthForm = ({ isActive, togglePanel }: AuthFormProps) => {
 						/>
 					)}
 					{registrationMode ? (
-						<p className='auth__notification'>
+						<p className='auth-form__notification'>
 							Если уже зарегистрированы, то{' '}
 							<u onClick={() => setRegistrationMode(false)}>
 								войдите в систему
 							</u>
 						</p>
 					) : (
-						<p className='auth__notification'>
+						<p className='auth-form__notification'>
 							Если не зарегистрированы, то{' '}
 							<u onClick={() => setRegistrationMode(true)}>зарегистрируйтесь</u>
 						</p>
@@ -107,6 +89,6 @@ export const AuthForm = ({ isActive, togglePanel }: AuthFormProps) => {
 					</Button>
 				</form>
 			)}
-		</Panel>
+		</div>
 	);
 };

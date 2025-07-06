@@ -1,11 +1,10 @@
-.auth {
-
+.auth-form {
+  padding: 10px;
 }
 
-.auth__notification {
+.auth-form__notification {
   font-size: 14px;
   margin: 20px 0;
   cursor: pointer;
   text-align: right;
 }
-

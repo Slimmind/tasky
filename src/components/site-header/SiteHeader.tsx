@@ -1,43 +1,26 @@
 import { lazy } from 'react';
-import { PanelViews } from '../../utils/constants';
-import { usePanel } from '../../context/panel.context';
+import clsx from 'clsx';
 import { useAuth } from '../../context/auth.context';
+import { Link } from '@tanstack/react-router';
 import './site-header.styles.css';
 
 const SiteLogo = lazy(() => import('../site-logo'));
-// const Clock = lazy(() => import("../clock"));
-const Button = lazy(() => import('../button'));
 
 export const SiteHeader = () => {
-	const { activePanel, setActivePanel } = usePanel();
 	const { currentUser } = useAuth();
-	console.log('CURRENT USER', currentUser);
 
-	const isActive = activePanel === PanelViews.AUTH;
-
-	const togglePanel = () => {
-		setActivePanel(isActive ? null : PanelViews.AUTH);
-	};
+	const classes = clsx(
+		'btn',
+		currentUser ? 'btn--secondary user-name' : 'btn--icon btn--auth'
+	);
 
 	return (
 		<header className='site-header'>
 			<SiteLogo />
-			{/* <Clock /> */}
-			{currentUser ? (
-				<Button
-					mod='secondary user-name'
-					onClick={togglePanel}
-					aria-label='toggle auth form'
-				>
-					{currentUser?.displayName}
-				</Button>
-			) : (
-				<Button
-					mod='icon auth'
-					onClick={togglePanel}
-					aria-label='toggle auth form'
-				></Button>
-			)}
+
+			<Link to='/signin' className={classes}>
+				{currentUser && currentUser?.displayName}
+			</Link>
 		</header>
 	);
 };

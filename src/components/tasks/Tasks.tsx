@@ -1,26 +1,34 @@
 import { lazy } from 'react';
-import { useTasks } from '../../context/task.context';
 import { taskGroupList } from '../../utils/constants';
+import { useBoards } from '../../context/boards.context';
 import './tasks.styles.css';
+
+type TasksTypes = {
+	boardId: string;
+};
 
 const TaskGroup = lazy(() => import('../task-group'));
 
-export const Tasks = () => {
-	const { tasks } = useTasks();
+export const Tasks = ({ boardId }: TasksTypes) => {
+	const { boards } = useBoards();
+	const tasks = boards.find((board) => board.id === boardId)?.tasks || [];
+	console.log(
+		'TASKS: ',
+		boards.find((board) => board.id === boardId)
+	);
 
 	return (
-		tasks.length > 0 && (
-			<div className='tasks'>
-				<ul className='tasks__group-list'>
-					{taskGroupList.map((group: string) => (
-						<TaskGroup
-							key={group}
-							group={group}
-							tasks={tasks}
-						/>
-					))}
-				</ul>
-			</div>
-		)
+		<div className='tasks'>
+			<ul className='tasks__group-list'>
+				{taskGroupList.map((group: string) => (
+					<TaskGroup
+						key={group}
+						group={group}
+						tasks={tasks}
+						boardId={boardId}
+					/>
+				))}
+			</ul>
+		</div>
 	);
 };
