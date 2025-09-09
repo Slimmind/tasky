@@ -30,7 +30,7 @@ export const TaskForm = ({ boardId, taskId }: TaskFormProps) => {
 	const { boards, changeBoard } = useBoards();
 	const navigate = useNavigate();
 	const currentBoard = boards.find((board: BoardType) => board.id === boardId);
-	const currentTask = currentBoard?.tasks.find((task) => task.id === taskId);
+	const currentTask = currentBoard?.tasks?.find((task) => task.id === taskId);
 
 	// Ленивая инициализация subtasks
 	const initializeSubtasks = useCallback(
@@ -98,13 +98,15 @@ export const TaskForm = ({ boardId, taskId }: TaskFormProps) => {
 			if (currentBoard && boardId) {
 				const newTask = buildTask();
 				const updatedTasks = taskId
-					? currentBoard.tasks.map((task) =>
+					? currentBoard.tasks?.map((task) =>
 							task.id === taskId ? { ...task, ...newTask } : task
-						)
-					: currentBoard.tasks;
+						) || []
+					: currentBoard.tasks || [];
 				const updatedBoards = {
 					...currentBoard,
-					tasks: taskId ? updatedTasks : [...currentBoard.tasks, newTask],
+					tasks: taskId
+						? updatedTasks
+						: [...(currentBoard.tasks || []), newTask],
 				};
 				console.log('UPDATED_BOARD: ', updatedBoards);
 				console.log('TASK: ', newTask);

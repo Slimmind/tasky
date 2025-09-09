@@ -136,7 +136,9 @@ export const Task = ({ data }: TaskProps) => {
 			const updatedBoard = {
 				...currentBoard,
 				tasks: [
-					...currentBoard.tasks.filter((task) => task.id !== updatedTask.id),
+					...(currentBoard.tasks?.filter(
+						(task) => task.id !== updatedTask.id
+					) || []),
 					updatedTask,
 				],
 			};
@@ -152,7 +154,9 @@ export const Task = ({ data }: TaskProps) => {
 			const updatedBoard = {
 				...currentBoard,
 				tasks: [
-					...currentBoard.tasks.filter((task) => task.id !== updatedTask.id),
+					...(currentBoard.tasks?.filter(
+						(task) => task.id !== updatedTask.id
+					) || []),
 					updatedTask,
 				],
 			};
@@ -164,7 +168,7 @@ export const Task = ({ data }: TaskProps) => {
 	const removeTask = useCallback(() => {
 		const updatedBoard = {
 			...currentBoard,
-			tasks: currentBoard.tasks.filter((task) => task.id !== data.id),
+			tasks: currentBoard.tasks?.filter((task) => task.id !== data.id) || [],
 		};
 		changeBoard(data.boardId, updatedBoard);
 	}, [data.id, currentBoard, data.boardId, changeBoard]);

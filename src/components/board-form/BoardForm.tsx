@@ -7,7 +7,6 @@ import {
 	useCallback,
 	memo,
 } from 'react';
-import { nanoid } from 'nanoid';
 import './board-form.styles.css';
 import { useBoards } from '../../context/boards.context';
 import { useNavigate } from '@tanstack/react-router';
@@ -54,13 +53,16 @@ export const BoardForm = ({ boardId }: BoardFormProps) => {
 	const submitForm = useCallback(
 		(event: FormEvent) => {
 			event.preventDefault();
-			const newBoard = buildBoard();
-			console.log('TASK: ', newBoard);
+			const boardData = buildBoard();
+			console.log('TASK: ', boardData);
 
 			if (boardId) {
-				changeBoard(boardId, newBoard);
+				// For editing, we need to pass the full board object with id
+				const updatedBoard = { ...boardData, id: boardId };
+				changeBoard(boardId, updatedBoard);
 			} else {
-				addBoard(newBoard);
+				// For creating, we pass the board data without id
+				addBoard(boardData);
 			}
 			resetForm();
 			navigate({ to: '/' });
@@ -69,8 +71,7 @@ export const BoardForm = ({ boardId }: BoardFormProps) => {
 	);
 
 	const buildBoard = useCallback(
-		(): BoardType => ({
-			id: nanoid(),
+		(): Omit<BoardType, 'id'> => ({
 			title,
 			description,
 			color: getColor(getRandomRGB()),
