@@ -91,5 +91,5 @@ export type BoardType = {
 	title: string;
 	description?: string;
 	color: string;
-	tasks: TaskType[];
+	tasks?: TaskType[];
 };

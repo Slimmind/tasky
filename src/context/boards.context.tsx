@@ -39,7 +39,7 @@ export const BoardsProvider = ({ children }: { children: ReactNode }) => {
 	}, [boards]);
 
 	const addBoard = useCallback((board: Omit<BoardType, 'id'>) => {
-		const newBoard: BoardType = { id: nanoid(), ...board };
+		const newBoard: BoardType = { id: nanoid(), tasks: [], ...board };
 		setBoards((prev) => [...prev, newBoard]);
 	}, []);
 

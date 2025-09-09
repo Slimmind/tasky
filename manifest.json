@@ -1,7 +1,7 @@
 {
 	"name": "Tasky",
 	"short_name": "tasky",
-	"theme_color": "#00766e",
+	"theme_color": "#fff",
 	"background_color": "#fff",
 	"display": "standalone",
 	"orientation": "portrait",

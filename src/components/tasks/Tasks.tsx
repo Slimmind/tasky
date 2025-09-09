@@ -12,10 +12,6 @@ const TaskGroup = lazy(() => import('../task-group'));
 export const Tasks = ({ boardId }: TasksTypes) => {
 	const { boards } = useBoards();
 	const tasks = boards.find((board) => board.id === boardId)?.tasks || [];
-	console.log(
-		'TASKS: ',
-		boards.find((board) => board.id === boardId)
-	);
 
 	return (
 		<div className='tasks'>
