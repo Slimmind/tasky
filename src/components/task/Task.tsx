@@ -1,10 +1,5 @@
 import { lazy, useCallback, useState, useMemo, useRef, useEffect } from 'react';
-import {
-	SubtaskType,
-	TaskType,
-	TaskVariants,
-	TaskVariantType,
-} from '../../utils/constants';
+import { TaskType, TaskVariants, TaskVariantType } from '../../utils/constants';
 import clsx from 'clsx';
 import { Link } from '@tanstack/react-router';
 import { useBoards } from '../../context/boards.context';
@@ -32,14 +27,27 @@ type SwitcherConfig = {
 	key: string;
 };
 
+// Cache for switcher configurations
+const switchersCache = new Map<string, SwitcherConfig[]>();
+
+// Cache for computed task properties
+const taskPropertyCache = new Map<string, { titleHeight: number }>();
+
 const getSwitchersConfig = (
 	taskType: TaskVariantType,
 	changeTaskType: (type: TaskVariantType) => void,
 	removeTask: () => void
 ): SwitcherConfig[] => {
+	const cacheKey = `${taskType}`;
+
+	if (switchersCache.has(cacheKey)) {
+		return switchersCache.get(cacheKey)!;
+	}
+
+	let result: SwitcherConfig[] = [];
 	switch (taskType) {
 		case TaskVariants.BACKLOG:
-			return [
+			result = [
 				{
 					mod: 'color todo',
 					anchor: 'todo',
@@ -48,8 +56,9 @@ const getSwitchersConfig = (
 					key: 'todo',
 				},
 			];
+			break;
 		case TaskVariants.TODO:
-			return [
+			result = [
 				{
 					mod: 'color backlog',
 					anchor: 'backlog',
@@ -65,8 +74,9 @@ const getSwitchersConfig = (
 					key: 'inProgress',
 				},
 			];
+			break;
 		case TaskVariants.IN_PROGRESS:
-			return [
+			result = [
 				{
 					mod: 'color todo',
 					anchor: 'todo',
@@ -82,8 +92,9 @@ const getSwitchersConfig = (
 					key: 'done',
 				},
 			];
+			break;
 		case TaskVariants.DONE:
-			return [
+			result = [
 				{
 					mod: 'color inProgress',
 					anchor: 'inProgress',
@@ -105,9 +116,13 @@ const getSwitchersConfig = (
 					key: 'backlog',
 				},
 			];
+			break;
 		default:
-			return [];
+			result = [];
 	}
+
+	switchersCache.set(cacheKey, result);
+	return result;
 };
 
 export const Task = ({ data }: TaskProps) => {
@@ -117,36 +132,41 @@ export const Task = ({ data }: TaskProps) => {
 	const [isCollapsed, setIsCollapsed] = useState(
 		data.type === TaskVariants.DONE
 	);
-	const [titleHeight, setTitleHeight] = useState<number>(0);
+
+	// Cache computed properties to avoid recomputations
+	const cachedTaskProperties = useMemo(() => {
+		const cacheKey = `task-${data.id}`;
+		if (taskPropertyCache.has(cacheKey)) {
+			return taskPropertyCache.get(cacheKey)!;
+		}
+
+		const properties = {
+			titleHeight: 0,
+		};
+
+		taskPropertyCache.set(cacheKey, properties);
+		return properties;
+	}, [data.id]);
+
+	const [titleHeight, setTitleHeight] = useState<number>(
+		cachedTaskProperties.titleHeight
+	);
 	const currentBoard = getCurrentBoard(data.boardId, boards);
 
 	useEffect(() => {
 		if (elementRef.current) {
-			setTitleHeight(elementRef.current.offsetHeight);
-		}
-	}, []);
+			const height = elementRef.current.offsetHeight;
+			setTitleHeight(height);
 
-	const updateTask = useCallback(
-		(subtask: SubtaskType) => {
-			const updatedSubtasks = data.subtasks.map((item) =>
-				item.id === subtask.id ? subtask : item
-			);
-
-			const updatedTask = { ...data, subtasks: updatedSubtasks };
-			const updatedBoard = {
-				...currentBoard,
-				tasks: [
-					...(currentBoard.tasks?.filter(
-						(task) => task.id !== updatedTask.id
-					) || []),
-					updatedTask,
-				],
+			// Update cache
+			const cacheKey = `task-${data.id}`;
+			const cachedProperties = taskPropertyCache.get(cacheKey) || {
+				titleHeight: 0,
 			};
-
-			changeBoard(data.boardId, updatedBoard);
-		},
-		[data, currentBoard, data.boardId, changeBoard]
-	);
+			cachedProperties.titleHeight = height;
+			taskPropertyCache.set(cacheKey, cachedProperties);
+		}
+	}, [data.id]);
 
 	const changeTaskType = useCallback(
 		(taskType: TaskVariantType) => {
@@ -232,7 +252,24 @@ export const Task = ({ data }: TaskProps) => {
 							<Subtask
 								key={subtask.id}
 								data={subtask}
-								changeSubtaskHandler={updateTask}
+								changeSubtaskHandler={(subtask) => {
+									const updatedSubtasks = data.subtasks.map((item) =>
+										item.id === subtask.id ? subtask : item
+									);
+
+									const updatedTask = { ...data, subtasks: updatedSubtasks };
+									const updatedBoard = {
+										...currentBoard,
+										tasks: [
+											...(currentBoard.tasks?.filter(
+												(task) => task.id !== updatedTask.id
+											) || []),
+											updatedTask,
+										],
+									};
+
+									changeBoard(data.boardId, updatedBoard);
+								}}
 							/>
 						))}
 					</ul>

@@ -1,9 +1,9 @@
-import { lazy, useMemo } from 'react';
-import { TaskType, TaskVariants } from '../../utils/constants';
+import { lazy, useMemo, memo } from 'react';
+import { TaskType, TaskVariants, GhostTaskConfig } from '../../utils/constants';
 import './task-group.styles.css';
 
 const Task = lazy(() => import('../task'));
-const GhostTask = lazy(() => import('../ghost-task'));
+const GhostItem = lazy(() => import('../ghost-item'));
 const CategoryIcon = lazy(() => import('../category-icon'));
 
 type TaskGroupProps = {
@@ -12,7 +12,8 @@ type TaskGroupProps = {
 	tasks: TaskType[];
 };
 
-export const TaskGroup = ({ boardId, group, tasks }: TaskGroupProps) => {
+// Memoize the TaskGroup component to prevent unnecessary re-renders
+const TaskGroupComponent = memo(({ boardId, group, tasks }: TaskGroupProps) => {
 	const categoriesWithTasks = useMemo(() => {
 		const categories = new Set<string>();
 		tasks.forEach((task) => {
@@ -60,8 +61,12 @@ export const TaskGroup = ({ boardId, group, tasks }: TaskGroupProps) => {
 				{groupedTasks.map((task) => (
 					<Task key={task.id} data={task} />
 				))}
-				{group === TaskVariants.BACKLOG && <GhostTask boardId={boardId} />}
+				{group === TaskVariants.BACKLOG && (
+					<GhostItem config={GhostTaskConfig} boardId={boardId} />
+				)}
 			</ul>
 		</li>
 	);
-};
+});
+
+export const TaskGroup = TaskGroupComponent;

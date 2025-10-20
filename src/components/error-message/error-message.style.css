@@ -1,0 +1,9 @@
+.error-message {
+	padding: 10px 15px;
+	background-color: var(--color-red-transparent-weak);
+	border: var(--border-width) solid var(--color-red);
+	border-radius: var(--radius-small);
+	color: var(--color-red);
+  font-size: 14px;
+	margin-bottom: 15px;
+}

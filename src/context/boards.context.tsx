@@ -47,12 +47,14 @@ export const BoardsProvider = ({ children }: { children: ReactNode }) => {
 		setBoards((prev) => prev.filter((board) => board.id !== id));
 	}, []);
 
+	// Optimized changeBoard function to avoid unnecessary re-renders
 	const changeBoard = useCallback((id: string, updatedBoard: BoardType) => {
 		setBoards((prev) =>
 			prev.map((board) => (board.id === id ? { ...updatedBoard } : board))
 		);
 	}, []);
 
+	// Memoize the context value to prevent unnecessary re-renders
 	const value = useMemo(
 		() => ({
 			boards,
@@ -60,7 +62,7 @@ export const BoardsProvider = ({ children }: { children: ReactNode }) => {
 			removeBoard,
 			changeBoard,
 		}),
-		[addBoard, boards, changeBoard, removeBoard]
+		[boards, addBoard, removeBoard, changeBoard]
 	);
 
 	return (

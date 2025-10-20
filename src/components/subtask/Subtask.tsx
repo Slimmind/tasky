@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from 'react';
+import { useState, FC, useEffect, memo } from 'react';
 import clsx from 'clsx';
 import { SubtaskType } from '../../utils/constants';
 import './subtask.styles.css';
@@ -9,34 +9,36 @@ type SubtaskProps = {
 	mod?: string;
 };
 
-export const Subtask: FC<SubtaskProps> = ({
-	data,
-	changeSubtaskHandler,
-	mod,
-}) => {
-	const [isChecked, setIsChecked] = useState<boolean>(data.checked);
+// Memoize the Subtask component to prevent unnecessary re-renders
+const SubtaskComponent: FC<SubtaskProps> = memo(
+	({ data, changeSubtaskHandler, mod }) => {
+		const [isChecked, setIsChecked] = useState<boolean>(data.checked);
 
-	const handleIsChecked = () => {
-		setIsChecked((prev) => !prev);
-	};
+		const handleIsChecked = () => {
+			setIsChecked((prev) => !prev);
+		};
 
-	const classes = clsx(
-		'subtask',
-		isChecked && 'subtask--checked',
-		mod && `subtask--${mod}`
-	);
+		const classes = clsx(
+			'subtask',
+			isChecked && 'subtask--checked',
+			mod && `subtask--${mod}`
+		);
 
-	useEffect(() => {
-		// Проверяем, изменилось ли состояние isChecked
-		if (isChecked !== data.checked) {
-			const updatedSubtask = { ...data, checked: isChecked };
-			changeSubtaskHandler(updatedSubtask);
-		}
-	}, [isChecked, changeSubtaskHandler, data]);
+		useEffect(() => {
+			// Проверяем, изменилось ли состояние isChecked
+			if (isChecked !== data.checked) {
+				const updatedSubtask = { ...data, checked: isChecked };
+				changeSubtaskHandler(updatedSubtask);
+			}
+		}, [isChecked, changeSubtaskHandler, data]);
 
-	return (
-		<li className={classes} id={data.id} onClick={handleIsChecked}>
-			{data.value}
-		</li>
-	);
-};
+		return (
+			<li className={classes} id={data.id} onClick={handleIsChecked}>
+				{data.value}
+			</li>
+		);
+	}
+);
+
+// Export the memoized component
+export const Subtask = SubtaskComponent;
