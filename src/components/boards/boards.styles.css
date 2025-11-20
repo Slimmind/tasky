@@ -3,6 +3,6 @@
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  max-height: 500px;
+  max-height: calc(100dvh - 155px);
   overflow-y: auto;
 }
