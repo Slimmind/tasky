@@ -1,32 +1,31 @@
-import { ChangeEvent, lazy, useState } from 'react';
-
-const Button = lazy(() => import('../button'));
-const Panel = lazy(() => import('../panel'));
-const Input = lazy(() => import('../input'));
+import { ChangeEvent, useState } from "react";
+import Button from "../button";
+import Panel from "../panel";
+import Input from "../input";
 
 type SearchProps = {
-	isActive: boolean;
-	togglePanel: () => void;
+  isActive: boolean;
+  togglePanel: () => void;
 };
 
 export const Search = ({ isActive, togglePanel }: SearchProps) => {
-	const [searchQuery, setSearchQuery] = useState('');
-	const handleInputChange = (
-		event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => {
-		setSearchQuery(event.target.value);
-	};
-	return (
-		<>
-			<Button mod='icon search' onClick={togglePanel} aria-label='search' />
-			<Panel isActive={isActive} title='Search'>
-				<Input
-					id='title'
-					value={searchQuery}
-					onChange={handleInputChange}
-					type='search'
-				/>
-			</Panel>
-		</>
-	);
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setSearchQuery(event.target.value);
+  };
+  return (
+    <>
+      <Button mod="icon search" onClick={togglePanel} aria-label="search" />
+      <Panel isActive={isActive} title="Search">
+        <Input
+          id="title"
+          value={searchQuery}
+          onChange={handleInputChange}
+          type="search"
+        />
+      </Panel>
+    </>
+  );
 };

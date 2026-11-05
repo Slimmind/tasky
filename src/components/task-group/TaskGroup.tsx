@@ -1,72 +1,59 @@
-import { lazy, useMemo, memo } from 'react';
-import { TaskType, TaskVariants, GhostTaskConfig } from '../../utils/constants';
-import './task-group.styles.css';
-
-const Task = lazy(() => import('../task'));
-const GhostItem = lazy(() => import('../ghost-item'));
-const CategoryIcon = lazy(() => import('../category-icon'));
+import { useMemo, memo } from "react";
+import { TaskType, TaskVariants, GhostTaskConfig } from "../../utils/constants";
+import Task from "../task";
+import GhostItem from "../ghost-item";
+import CategoryIcon from "../category-icon";
+import "./task-group.styles.css";
 
 type TaskGroupProps = {
-	boardId: string;
-	group: string;
-	tasks: TaskType[];
+  boardId: string;
+  group: string;
+  tasks: TaskType[];
 };
 
-// Memoize the TaskGroup component to prevent unnecessary re-renders
-const TaskGroupComponent = memo(({ boardId, group, tasks }: TaskGroupProps) => {
-	const categoriesWithTasks = useMemo(() => {
-		const categories = new Set<string>();
-		tasks.forEach((task) => {
-			if (task.type) {
-				categories.add(task.type);
-			}
-		});
-		return Array.from(categories);
-	}, [tasks]);
+export const TaskGroup = memo(({ boardId, group, tasks }: TaskGroupProps) => {
+  const categoriesWithTasks = useMemo(
+    () => Array.from(new Set(tasks.map((task) => task.type).filter(Boolean))),
+    [tasks],
+  );
 
-	const groupedTasks = useMemo(
-		() => tasks.filter((task) => task.type === group),
-		[tasks, group]
-	);
+  const groupedTasks = useMemo(
+    () => tasks.filter((task) => task.type === group),
+    [tasks, group],
+  );
 
-	const categoryTiles = useMemo(
-		() =>
-			categoriesWithTasks
-				.filter((category: string) => category !== group)
-				.map((category: string) => (
-					<a
-						key={category}
-						href={`#${category}`}
-						className={`task-group__header-tile task-group__header-tile--${category}`}
-					>
-						<CategoryIcon category={category} />
-					</a>
-				)),
-		[categoriesWithTasks, group]
-	);
+  const categoryTiles = categoriesWithTasks
+    .filter((category: string) => category !== group)
+    .map((category: string) => (
+      <a
+        key={category}
+        href={`#${category}`}
+        className={`task-group__header-tile task-group__header-tile--${category}`}
+      >
+        <CategoryIcon category={category} />
+      </a>
+    ));
 
-	return (
-		<li className={`task-group task-group--${group}`}>
-			<header className='task-group__header'>
-				<strong
-					id={group}
-					className={`task-group__header-tile task-group__header-tile--main task-group__header-tile--${group}`}
-				>
-					<CategoryIcon category={group} />
-					{group}
-				</strong>
-				{categoryTiles}
-			</header>
-			<ul className='task-group__body'>
-				{groupedTasks.map((task) => (
-					<Task key={task.id} data={task} />
-				))}
-				{group === TaskVariants.BACKLOG && (
-					<GhostItem config={GhostTaskConfig} boardId={boardId} />
-				)}
-			</ul>
-		</li>
-	);
+  return (
+    <li className={`task-group task-group--${group}`}>
+      <header className="task-group__header">
+        <strong
+          id={group}
+          className={`task-group__header-tile task-group__header-tile--main task-group__header-tile--${group}`}
+        >
+          <CategoryIcon category={group} />
+          {group}
+        </strong>
+        {categoryTiles}
+      </header>
+      <ul className="task-group__body">
+        {groupedTasks.map((task) => (
+          <Task key={task.id} data={task} />
+        ))}
+        {group === TaskVariants.BACKLOG && (
+          <GhostItem config={GhostTaskConfig} boardId={boardId} />
+        )}
+      </ul>
+    </li>
+  );
 });
-
-export const TaskGroup = TaskGroupComponent;

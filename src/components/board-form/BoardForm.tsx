@@ -1,130 +1,98 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useState,
-  useEffect,
-  lazy,
-  useCallback,
-  memo,
-} from "react";
-import "./board-form.styles.css";
+import { ChangeEvent, FormEvent, useState, useEffect, useRef } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useBoardsStore } from "../../store/boards.store";
 import { useAuth } from "../../context/auth.context";
-import { useNavigate } from "@tanstack/react-router";
-import { BoardType } from "../../utils/constants";
-import { getColor } from "../../utils/get-color";
 import { getRandomRGB } from "../../utils/get-random-rgb";
 import BackButton from "../back-button";
-
-const Button = lazy(() => import("../button"));
-const Input = lazy(() => import("../input"));
+import Button from "../button";
+import Input from "../input";
+import NotFound from "../not-found";
+import Preloader from "../preloader";
+import "./board-form.styles.css";
 
 type BoardFormProps = {
   boardId?: string;
 };
 
-// Мемоизированный компонент Input
-const MemoizedInput = memo(Input);
-
 export const BoardForm = ({ boardId }: BoardFormProps) => {
-  const boards = useBoardsStore((state) => state.boards);
+  const currentBoard = useBoardsStore((state) =>
+    state.boards.find((board) => board.id === boardId),
+  );
+  const isLoading = useBoardsStore((state) => state.isLoading);
   const addBoard = useBoardsStore((state) => state.addBoard);
-  const changeBoard = useBoardsStore((state) => state.changeBoard);
+  const updateBoard = useBoardsStore((state) => state.updateBoard);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const currentBoard = boards.find((board: BoardType) => board.id === boardId);
 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  // Инициализация состояния при изменении currentBoard
+  // Заполняем форму один раз: последующие обновления из Firestore не должны
+  // затирать то, что пользователь уже ввёл.
+  const isInitialized = useRef(false);
   useEffect(() => {
-    if (currentBoard) {
+    if (currentBoard && !isInitialized.current) {
+      isInitialized.current = true;
       setTitle(currentBoard.title ?? "");
       setDescription(currentBoard.description ?? "");
     }
   }, [currentBoard]);
 
-  // Мемоизированный обработчик изменения input
-  const handleInputChange = useCallback(
-    (setter: React.Dispatch<React.SetStateAction<string>>) =>
-      (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setter(event.target.value),
-    [],
-  );
+  const handleChange =
+    (setter: (value: string) => void) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setter(event.target.value);
 
-  // Мемоизированная функция отправки формы
-  const submitForm = useCallback(
-    async (event: FormEvent) => {
-      event.preventDefault();
-      if (!currentUser) return;
-      const boardData = buildBoard();
-      console.log("TASK: ", boardData);
+  const submitForm = (event: FormEvent) => {
+    event.preventDefault();
+    if (!currentUser) return;
 
-      if (boardId) {
-        // For editing, we need to pass the full board object with id
-        const updatedBoard = { ...boardData, id: boardId };
-        await changeBoard(boardId, updatedBoard, currentUser.uid);
-      } else {
-        // For creating, we pass the board data without id
-        await addBoard(boardData, currentUser.uid);
-      }
-      resetForm();
-      navigate({ to: "/" });
-    },
-    [title, description, boardId, changeBoard, addBoard, currentUser],
-  );
+    const fields = { title: title.trim(), description: description.trim() };
+    if (!fields.title) return;
 
-  const buildBoard = useCallback(
-    (): Omit<BoardType, "id"> => ({
-      title,
-      description,
-      color: getColor(getRandomRGB()),
-      tasks: [],
-    }),
-    [title, description],
-  );
+    const saving = boardId
+      ? updateBoard(boardId, fields)
+      : addBoard(
+          { ...fields, color: getRandomRGB(), tasks: [] },
+          currentUser.uid,
+        );
 
-  // Функция сброса формы
-  const resetForm = useCallback(() => {
-    setTitle("");
-    setDescription("");
-  }, []);
+    // Не ждём ответа сервера: локальный snapshot обновит список сразу,
+    // а в офлайне промис не завершился бы до появления сети.
+    saving.catch((error) => console.error("Failed to save the board:", error));
+    navigate({ to: "/" });
+  };
+
+  if (boardId && isLoading) return <Preloader />;
+  if (boardId && !currentBoard) return <NotFound message="Проект не найден" />;
 
   return (
-    <>
-      <form onSubmit={submitForm} className="board-form">
-        <h3 className="board-form__title">
-          {boardId ? "Редактирование доски" : "Создание новой доски"}
-        </h3>
-        <MemoizedInput
-          id="title"
-          value={title}
-          onChange={handleInputChange(setTitle)}
-          type="text"
-          placeholder="Заголовок..."
-        />
-        <MemoizedInput
-          id="description"
-          value={description}
-          onChange={handleInputChange(setDescription)}
-          type="textarea"
-          placeholder="Описание..."
-        />
+    <form onSubmit={submitForm} className="board-form">
+      <h3 className="board-form__title">
+        {boardId ? "Редактирование доски" : "Создание новой доски"}
+      </h3>
+      <Input
+        id="title"
+        value={title}
+        onChange={handleChange(setTitle)}
+        type="text"
+        placeholder="Заголовок..."
+        required
+      />
+      <Input
+        id="description"
+        value={description}
+        onChange={handleChange(setDescription)}
+        type="textarea"
+        placeholder="Описание..."
+      />
 
-        <div className="board-form__controls">
-          <BackButton>Отмена</BackButton>
-          {boardId ? (
-            <Button type="submit" mod="wide">
-              Сохранить
-            </Button>
-          ) : (
-            <Button type="submit" mod="wide">
-              Создать
-            </Button>
-          )}
-        </div>
-      </form>
-    </>
+      <div className="board-form__controls">
+        <BackButton>Отмена</BackButton>
+        <Button type="submit" mod="wide">
+          {boardId ? "Сохранить" : "Создать"}
+        </Button>
+      </div>
+    </form>
   );
 };

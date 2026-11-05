@@ -1,25 +1,25 @@
-import { Component, ReactNode } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
+import { ErrorMessage } from "../error-message";
 
 type Props = { children: ReactNode };
 type State = { hasError: boolean };
 
 export class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  state: State = { hasError: false };
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
-  componentDidCatch(error: any, errorInfo: any) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Error Boundary Caught:", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      return <h2>Something went wrong. Try refreshing the page.</h2>;
+      return (
+        <ErrorMessage message="Что-то пошло не так. Попробуйте обновить страницу." />
+      );
     }
     return this.props.children;
   }

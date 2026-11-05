@@ -19,11 +19,13 @@ describe("Button", () => {
   });
 
   it("applies modifier classes", () => {
-    render(<Button mod="primary">Primary</Button>);
+    render(<Button mod="primary wide">Primary</Button>);
     const button = screen.getByRole("button");
-    // Assuming getMod('btn', 'primary') returns 'btn--primary' or similar.
-    // Since I don't know the exact implementation of getMod, I'll check if class list contains something related or just check if it renders without crashing first.
-    // Let's check for partial match or just existence.
-    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass("btn", "btn--primary", "btn--wide");
+  });
+
+  it("does not leak 'undefined' into the class list", () => {
+    render(<Button>Plain</Button>);
+    expect(screen.getByRole("button").className).toBe("btn");
   });
 });

@@ -1,17 +1,12 @@
-import { createLazyFileRoute } from '@tanstack/react-router';
-import TaskForm from '../../components/task-form';
+import { createLazyFileRoute } from "@tanstack/react-router";
+import TaskForm from "../../components/task-form";
 
-
-interface TaskAddSearch {
-  boardId?: string;
-}
-
-export const Route = createLazyFileRoute('/tasks/edit/$taskId')({
-	component: RouteComponent,
+export const Route = createLazyFileRoute("/tasks/edit/$taskId")({
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { taskId } = Route.useParams();
-  const search = Route.useSearch() as TaskAddSearch;
-	return <TaskForm taskId={taskId} boardId={search?.boardId} />;
+  const { taskId } = Route.useParams();
+  const { boardId } = Route.useSearch();
+  return <TaskForm taskId={taskId} boardId={boardId} />;
 }

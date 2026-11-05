@@ -15,7 +15,15 @@ export const Board = ({ data }: BoardProps) => {
   const removeBoard = useBoardsStore((state) => state.removeBoard);
 
   const onRemoveBoard = (): void => {
-    removeBoard(data.id);
+    const taskCount = data.tasks?.length ?? 0;
+    const warning = taskCount
+      ? `Удалить проект «${data.title}» вместе с заданиями (${taskCount})?`
+      : `Удалить проект «${data.title}»?`;
+    if (!window.confirm(warning)) return;
+
+    removeBoard(data.id).catch((error) =>
+      console.error("Failed to remove the board:", error),
+    );
   };
   return (
     <li
@@ -39,7 +47,7 @@ export const Board = ({ data }: BoardProps) => {
           <Button
             mod="color delete"
             onClick={onRemoveBoard}
-            aria-label="edit board"
+            aria-label="delete board"
           >
             <RemoveIcon />
           </Button>

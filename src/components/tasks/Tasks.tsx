@@ -1,18 +1,28 @@
-import { lazy, memo } from "react";
+import { memo } from "react";
 import { taskGroupList } from "../../utils/constants";
 import { useBoardsStore } from "../../store/boards.store";
+import TaskGroup from "../task-group";
+import NotFound from "../not-found";
+import Preloader from "../preloader";
+import { ErrorMessage } from "../error-message";
 import "./tasks.styles.css";
 
 type TasksTypes = {
   boardId: string;
 };
 
-const TaskGroup = lazy(() => import("../task-group"));
+export const Tasks = memo(({ boardId }: TasksTypes) => {
+  const board = useBoardsStore((state) =>
+    state.boards.find((item) => item.id === boardId),
+  );
+  const isLoading = useBoardsStore((state) => state.isLoading);
+  const error = useBoardsStore((state) => state.error);
 
-// Memoize the Tasks component to prevent unnecessary re-renders
-const TasksComponent = memo(({ boardId }: TasksTypes) => {
-  const boards = useBoardsStore((state) => state.boards);
-  const tasks = boards.find((board) => board.id === boardId)?.tasks || [];
+  if (isLoading) return <Preloader />;
+  if (error) return <ErrorMessage message={error} />;
+  if (!board) return <NotFound message="Проект не найден" />;
+
+  const tasks = board.tasks ?? [];
 
   return (
     <div className="tasks">
@@ -29,6 +39,3 @@ const TasksComponent = memo(({ boardId }: TasksTypes) => {
     </div>
   );
 });
-
-// Export the memoized component
-export const Tasks = TasksComponent;

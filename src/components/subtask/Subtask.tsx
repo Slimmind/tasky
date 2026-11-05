@@ -1,44 +1,39 @@
-import { useState, FC, useEffect, memo } from 'react';
-import clsx from 'clsx';
-import { SubtaskType } from '../../utils/constants';
-import './subtask.styles.css';
+import { KeyboardEvent, memo } from "react";
+import clsx from "clsx";
+import { SubtaskType } from "../../utils/constants";
+import "./subtask.styles.css";
 
 type SubtaskProps = {
-	data: SubtaskType;
-	changeSubtaskHandler: (subtask: SubtaskType) => void;
-	mod?: string;
+  data: SubtaskType;
+  onToggle: (subtaskId: string) => void;
+  mod?: string;
 };
 
-// Memoize the Subtask component to prevent unnecessary re-renders
-const SubtaskComponent: FC<SubtaskProps> = memo(
-	({ data, changeSubtaskHandler, mod }) => {
-		const [isChecked, setIsChecked] = useState<boolean>(data.checked);
+export const Subtask = memo(({ data, onToggle, mod }: SubtaskProps) => {
+  const classes = clsx(
+    "subtask",
+    data.checked && "subtask--checked",
+    mod && `subtask--${mod}`,
+  );
 
-		const handleIsChecked = () => {
-			setIsChecked((prev) => !prev);
-		};
+  const handleKeyDown = (event: KeyboardEvent<HTMLLIElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onToggle(data.id);
+    }
+  };
 
-		const classes = clsx(
-			'subtask',
-			isChecked && 'subtask--checked',
-			mod && `subtask--${mod}`
-		);
-
-		useEffect(() => {
-			// Проверяем, изменилось ли состояние isChecked
-			if (isChecked !== data.checked) {
-				const updatedSubtask = { ...data, checked: isChecked };
-				changeSubtaskHandler(updatedSubtask);
-			}
-		}, [isChecked, changeSubtaskHandler, data]);
-
-		return (
-			<li className={classes} id={data.id} onClick={handleIsChecked}>
-				{data.value}
-			</li>
-		);
-	}
-);
-
-// Export the memoized component
-export const Subtask = SubtaskComponent;
+  return (
+    <li
+      className={classes}
+      id={data.id}
+      role="checkbox"
+      aria-checked={data.checked}
+      tabIndex={0}
+      onClick={() => onToggle(data.id)}
+      onKeyDown={handleKeyDown}
+    >
+      {data.value}
+    </li>
+  );
+});
